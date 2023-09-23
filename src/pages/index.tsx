@@ -3,9 +3,10 @@ import { Inter } from 'next/font/google'
 import Header from '@components/Header'
 const inter = Inter({ subsets: ['latin'] })
 import EmissionsChart from '../common/components/charts/EmissionsChart'
+import SavingsChart from '../common/components/charts/SavingsChart'
 
 
-import { Fragment, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
@@ -37,6 +38,7 @@ export const timeIntervals = [
   { name: 'Last 30 days', id: 'month'},
   { name: 'All-time', id: 'all'},
 ]
+
 const stats = [
   { name: 'Emissions Prevented', value: '405,091.00 lbs', change: '+4.75%', changeType: 'positive' },
   { name: 'Saved', value: '$12,787.00', change: '+54.02%', changeType: 'negative' },
@@ -119,6 +121,11 @@ const days = [
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [timeInterval, setTimeInterval] = useState('week') // 'week', 'month', 'all'
+  const value = useMemo(() => {
+    if (timeInterval === 'week') { return 7 }
+    if (timeInterval === 'month') { return 30 }
+    if (timeInterval === 'all') { return 100 }
+   } , [timeIntervals])
   return (
       <main>
         <div className="relative isolate overflow-hidden pt-16">
@@ -194,8 +201,8 @@ export default function Example() {
           {/* Recharts */}
           <div className="relative w-full h-[100vh] md:h-[50vh] py-64">
           <div className="absolute inset-0 grid md:grid-cols-2">
-            <div ><EmissionsChart interval=timeInterval /></div>
-            <div ><EmissionsChart /></div>
+            <div><EmissionsChart value={value || 0} /></div>
+            <div><SavingsChart value={value || 0} /></div>
           </div>
           </div>
 
