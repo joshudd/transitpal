@@ -109,9 +109,6 @@ const days = [
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
-    <>
-
-
       <main>
         <div className="relative isolate overflow-hidden pt-16">
           {/* Secondary navigation */}
@@ -358,6 +355,5 @@ export default function Example() {
           </div>
         </div>
       </main>
-    </div>
   )
 }
