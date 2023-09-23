@@ -17,10 +17,10 @@ import { BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 
 const navigation = [
-  { name: 'Home', href: '#' },
-  { name: 'Invoices', href: '#' },
-  { name: 'Clients', href: '#' },
-  { name: 'Expenses', href: '#' },
+  { name: 'Home', href: '#' }, // hold overview, graphics, metrics
+  { name: 'Trips', href: '#' },
+  { name: 'Locations', href: '#' },
+  { name: 'Settings', href: '#' },
 ]
 const secondaryNavigation = [
   { name: 'Last 7 days', href: '#', current: true },
@@ -28,91 +28,81 @@ const secondaryNavigation = [
   { name: 'All-time', href: '#', current: false },
 ]
 const stats = [
-  { name: 'Revenue', value: '$405,091.00', change: '+4.75%', changeType: 'positive' },
-  { name: 'Overdue invoices', value: '$12,787.00', change: '+54.02%', changeType: 'negative' },
-  { name: 'Outstanding invoices', value: '$245,988.00', change: '-1.39%', changeType: 'positive' },
-  { name: 'Expenses', value: '$30,156.00', change: '+10.18%', changeType: 'negative' },
+  { name: 'Emissions Prevented', value: '405,091.00 lbs', change: '+4.75%', changeType: 'positive' },
+  { name: 'Saved', value: '$12,787.00', change: '+54.02%', changeType: 'negative' },
 ]
 const statuses = {
-  Paid: 'text-green-700 bg-green-50 ring-green-600/20',
-  Withdraw: 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  Overdue: 'text-red-700 bg-red-50 ring-red-600/10',
+  Done: 'text-green-700 bg-green-50 ring-green-600/20',
+  Upcoming: 'text-gray-600 bg-gray-50 ring-gray-500/10',
+  Cancelled: 'text-red-700 bg-red-50 ring-red-600/10',
 }
+
+// suggest these/autofill
+const locations = [
+  {
+    id: 1,
+    name: 'Home',
+    imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
+    // how to fill from 
+    // lastTrip: '${days.trips.end_location.{id}}', // ignore for now
+  },
+  {
+    id: 2,
+    name: 'Work',
+    imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
+    // lastTrip: '${days.trips.end_location.{id}}',
+  },
+  {
+    id: 3,
+    name: 'School',
+    imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
+    // lastTrip: '${days.trips.end_location.{id}}',
+  },
+]
+
+// trip history
 const days = [
   {
     date: 'Today',
     dateTime: '2023-03-22',
-    transactions: [
+    trips: [
       {
         id: 1,
-        invoiceNumber: '00012',
-        href: '#',
-        amount: '$7,600.00 USD',
-        tax: '$500.00',
-        status: 'Paid',
-        client: 'Reform',
-        description: 'Website redesign',
+        href: '#', // trip summary popup?
+        start_location: 'idek', // or address, address probably saved with new id in firebase everytime one is used and has optional name
+        end_location: 'locations.id.2', // also idk the actual syntax for this
+        distance: '20 miles',
+        status: 'Upcoming', // 'Done', 'Cancelled'
+        description: 'Commute', // user input
         icon: ArrowUpCircleIcon,
       },
       {
         id: 2,
-        invoiceNumber: '00011',
-        href: '#',
-        amount: '$10,000.00 USD',
-        status: 'Withdraw',
-        client: 'Tom Cook',
-        description: 'Salary',
-        icon: ArrowDownCircleIcon,
-      },
-      {
-        id: 3,
-        invoiceNumber: '00009',
-        href: '#',
-        amount: '$2,000.00 USD',
-        tax: '$130.00',
-        status: 'Overdue',
-        client: 'Tuple',
-        description: 'Logo design',
-        icon: ArrowPathIcon,
+        href: '#', 
+        start_location: '${locations.id.2}', 
+        end_location: 'Home',
+        distance: '26 miles',
+        status: 'Done',
+        description: 'Quick trip',
+        icon: ArrowUpCircleIcon,
       },
     ],
   },
   {
     date: 'Yesterday',
     dateTime: '2023-03-21',
-    transactions: [
+    trips: [
       {
-        id: 4,
-        invoiceNumber: '00010',
-        href: '#',
-        amount: '$14,000.00 USD',
-        tax: '$900.00',
-        status: 'Paid',
-        client: 'SavvyCal',
-        description: 'Website redesign',
+        id: 2,
+        href: '#', 
+        start_location: 'locations.id.1', 
+        end_location: 'locations.id.3',
+        distance: '26 miles',
+        status: 'Cancelled',
+        description: 'Going to school',
         icon: ArrowUpCircleIcon,
       },
     ],
-  },
-]
-const clients = [
-  {
-    id: 1,
-    name: 'Tuple',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
-    lastInvoice: { date: 'December 13, 2022', dateTime: '2022-12-13', amount: '$2,000.00', status: 'Overdue' },
-  },
-  {
-    id: 2,
-    name: 'SavvyCal',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/savvycal.svg',
-    lastInvoice: { date: 'January 22, 2023', dateTime: '2023-01-22', amount: '$14,000.00', status: 'Paid' },
-  },
-  {
-    id: 3,
-    name: 'Reform',
-    imageUrl: 'https://tailwindui.com/img/logos/48x48/reform.svg',
-    lastInvoice: { date: 'January 23, 2023', dateTime: '2023-01-23', amount: '$7,600.00', status: 'Paid' },
   },
 ]
 
@@ -120,7 +110,7 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <>
+    <div>
       <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center gap-x-6">
@@ -195,7 +185,7 @@ export default function Example() {
           {/* Secondary navigation */}
           <header className="pb-4 pt-6 sm:pb-6">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
-              <h1 className="text-base font-semibold leading-7 text-gray-900">Cashflow</h1>
+              <h1 className="text-base font-semibold leading-7 text-gray-900">Overview</h1>
               <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
                 {secondaryNavigation.map((item) => (
                   <a key={item.name} href={item.href} className={item.current ? 'text-indigo-600' : 'text-gray-700'}>
@@ -208,7 +198,7 @@ export default function Example() {
                 className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
-                New invoice
+                New trip
               </a>
             </div>
           </header>
@@ -220,7 +210,7 @@ export default function Example() {
                 <div
                   key={stat.name}
                   className={clsx(
-                    statIdx % 2 === 1 ? 'sm:border-l' : statIdx === 2 ? 'lg:border-l' : '',
+        (            statIdx % 2 === 1 ? 'sm:border-l' : statIdx === 2 ? 'lg:border-l' : ''),
                     'flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8'
                   )}
                 >
@@ -248,13 +238,11 @@ export default function Example() {
             <div
               className="aspect-[1154/678] w-[72.125rem] bg-gradient-to-br from-[#FF80B5] to-[#9089FC]"
               style={{
-                clipPath:
-                  'polygon(100% 38.5%, 82.6% 100%, 60.2% 37.7%, 52.4% 32.1%, 47.5% 41.8%, 45.2% 65.6%, 27.5% 23.4%, 0.1% 35.3%, 17.9% 0%, 27.7% 23.4%, 76.2% 2.5%, 74.2% 56%, 100% 38.5%)',
-              }}
-            />
+                clipPath: 'polygon(100% 38.5%, 82.6% 100%, 60.2% 37.7%, 52.4% 32.1%, 47.5% 41.8%, 45.2% 65.6%, 27.5% 23.4%, 0.1% 35.3%, 17.9% 0%, 27.7% 23.4%, 76.2% 2.5%, 74.2% 56%, 100% 38.5%)'
+              }}>
+            </div>
           </div>
         </div>
-
         <div className="space-y-16 py-16 xl:space-y-20">
           {/* Recent activity table */}
           <div>
@@ -284,30 +272,30 @@ export default function Example() {
                               <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                             </th>
                           </tr>
-                          {day.transactions.map((transaction) => (
-                            <tr key={transaction.id}>
+                          {day.trips.map((trip) => (
+                            <tr key={trip.id}>
                               <td className="relative py-5 pr-6">
                                 <div className="flex gap-x-6">
-                                  <transaction.icon
+                                  <trip.icon
                                     className="hidden h-6 w-5 flex-none text-gray-400 sm:block"
                                     aria-hidden="true"
                                   />
                                   <div className="flex-auto">
                                     <div className="flex items-start gap-x-3">
                                       <div className="text-sm font-medium leading-6 text-gray-900">
-                                        {transaction.amount}
+                                        {trip.distance}
                                       </div>
-                                      <div
+                                      {/* <div
                                         className={clsx(
-                                          statuses[transaction.status],
+                                          statuses[trip.status], // this error not sure
                                           'rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset'
                                         )}
                                       >
-                                        {transaction.status}
-                                      </div>
+                                        {trip.status}
+                                      </div> */}
                                     </div>
-                                    {transaction.tax ? (
-                                      <div className="mt-1 text-xs leading-5 text-gray-500">{transaction.tax} tax</div>
+                                    {trip.description ? (
+                                      <div className="mt-1 text-xs leading-5 text-gray-500">{trip.description}</div>
                                     ) : null}
                                   </div>
                                 </div>
@@ -315,24 +303,24 @@ export default function Example() {
                                 <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
                               </td>
                               <td className="hidden py-5 pr-6 sm:table-cell">
-                                <div className="text-sm leading-6 text-gray-900">{transaction.client}</div>
-                                <div className="mt-1 text-xs leading-5 text-gray-500">{transaction.description}</div>
+                                <div className="text-sm leading-6 text-gray-900">{trip.start_location}</div>
+                                <div className="text-sm leading-6 text-gray-900">{trip.end_location}</div>
                               </td>
                               <td className="py-5 text-right">
                                 <div className="flex justify-end">
                                   <a
-                                    href={transaction.href}
+                                    href={trip.href}
                                     className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
                                   >
-                                    View<span className="hidden sm:inline"> transaction</span>
-                                    <span className="sr-only">
+                                    View<span className="hidden sm:inline"> trip</span>
+                                    {/* <span className="sr-only">
                                       , invoice #{transaction.invoiceNumber}, {transaction.client}
-                                    </span>
+                                    </span> */}
                                   </a>
                                 </div>
-                                <div className="mt-1 text-xs leading-5 text-gray-500">
+                                {/* <div className="mt-1 text-xs leading-5 text-gray-500">
                                   Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>
-                                </div>
+                                </div> */}
                               </td>
                             </tr>
                           ))}
@@ -349,21 +337,21 @@ export default function Example() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
               <div className="flex items-center justify-between">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">Recent clients</h2>
+                <h2 className="text-base font-semibold leading-7 text-gray-900">Recent locations</h2>
                 <a href="#" className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                  View all<span className="sr-only">, clients</span>
+                  View all<span className="sr-only">, locations</span>
                 </a>
               </div>
               <ul role="list" className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-                {clients.map((client) => (
-                  <li key={client.id} className="overflow-hidden rounded-xl border border-gray-200">
+                {locations.map((location) => (
+                  <li key={location.id} className="overflow-hidden rounded-xl border border-gray-200">
                     <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                       <img
-                        src={client.imageUrl}
-                        alt={client.name}
+                        src={location.imageUrl}
+                        alt={location.name}
                         className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
                       />
-                      <div className="text-sm font-medium leading-6 text-gray-900">{client.name}</div>
+                      <div className="text-sm font-medium leading-6 text-gray-900">{location.name}</div>
                       <Menu as="div" className="relative ml-auto">
                         <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                           <span className="sr-only">Open options</span>
@@ -388,7 +376,7 @@ export default function Example() {
                                     'block px-3 py-1 text-sm leading-6 text-gray-900'
                                   )}
                                 >
-                                  View<span className="sr-only">, {client.name}</span>
+                                  View<span className="sr-only">, {location.name}</span>
                                 </a>
                               )}
                             </Menu.Item>
@@ -401,7 +389,7 @@ export default function Example() {
                                     'block px-3 py-1 text-sm leading-6 text-gray-900'
                                   )}
                                 >
-                                  Edit<span className="sr-only">, {client.name}</span>
+                                  Edit<span className="sr-only">, {location.name}</span>
                                 </a>
                               )}
                             </Menu.Item>
@@ -411,23 +399,23 @@ export default function Example() {
                     </div>
                     <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
                       <div className="flex justify-between gap-x-4 py-3">
-                        <dt className="text-gray-500">Last invoice</dt>
+                        <dt className="text-gray-500">Last trip</dt>
                         <dd className="text-gray-700">
-                          <time dateTime={client.lastInvoice.dateTime}>{client.lastInvoice.date}</time>
+                          {/* <time dateTime={location.lastTrip}>{location.lastTrip}</time> specify last trip date ?? */}
                         </dd>
                       </div>
                       <div className="flex justify-between gap-x-4 py-3">
                         <dt className="text-gray-500">Amount</dt>
                         <dd className="flex items-start gap-x-2">
-                          <div className="font-medium text-gray-900">{client.lastInvoice.amount}</div>
-                          <div
+                          {/* <div className="font-medium text-gray-900">{location.lastDate.distance}</div> */} {/* same ?? */}
+                          {/* <div
                             className={clsx(
                               statuses[client.lastInvoice.status],
                               'rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset'
                             )}
                           >
                             {client.lastInvoice.status}
-                          </div>
+                          </div> */}
                         </dd>
                       </div>
                     </dl>
@@ -438,6 +426,6 @@ export default function Example() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
