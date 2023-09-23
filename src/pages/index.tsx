@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-
+import Header from '@components/Header'
 const inter = Inter({ subsets: ['latin'] })
 
 import { Fragment, useState } from 'react'
@@ -108,9 +108,8 @@ const days = [
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   return (
-    <div>
+    <>
       <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center gap-x-6">
