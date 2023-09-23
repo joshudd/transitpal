@@ -18,6 +18,12 @@ import {
 import { BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 
+const curDate = (new Date()).toDateString();
+const epochDate = Math.floor(((new Date()).getTime())/1000)
+var yesterDate = new Date();
+yesterDate.setDate(yesterDate.getDate()-1);
+const yesterdayString = yesterDate.toDateString();
+
 const navigation = [
   { name: 'Home', href: '#' }, // hold overview, graphics, metrics
   { name: 'Trips', href: '#' },
@@ -63,10 +69,10 @@ const locations = [
 ]
 
 // trip history
-export const days = [
+const days = [
   {
-    date: 'Today',
-    dateTime: '2023-03-22',
+    date: 'Today '.concat(curDate),
+    dateTime: curDate,
     trips: [
       {
         id: 1,
@@ -91,8 +97,8 @@ export const days = [
     ],
   },
   {
-    date: 'Yesterday',
-    dateTime: '2023-03-21',
+    date: 'Yesterday '.concat(yesterdayString),
+    dateTime: yesterdayString,
     trips: [
       {
         id: 2,
