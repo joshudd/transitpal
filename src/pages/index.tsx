@@ -139,6 +139,7 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeInterval, setTimeInterval] = useState("week"); // 'week', 'month', 'all'
   const [createTripOpen, setCreateTripOpen] = useState(false);
+  const [origin, setOrigin] = useState("");
   const value = useMemo(() => {
     if (timeInterval === "week") {
       return 7;
@@ -150,9 +151,49 @@ export default function Example() {
       return 100;
     }
   }, [timeIntervals]);
-  return (
+  const onTripSubmit = () => {
+    // create trip in firebase
+    // setCreateTripOpen(false)
+  }
+   return (
     <main>
-      <Modal open={createTripOpen} setOpen={setCreateTripOpen}><></></Modal>
+      <Modal open={createTripOpen} setOpen={setCreateTripOpen}>
+        <form onSubmit={onTripSubmit}>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium leading-6 text-gray-900"
+          >
+            Email
+          </label>
+          <div className="mt-2">
+            <input
+              required
+              onChange={(e) => setOrigin(e.target.value)}
+              value={origin}
+              type="email"
+              name="email"
+              id="email"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+            <button
+              type="button"
+              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+              onClick={() => setCreateTripOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </Modal>
       <div className="relative isolate overflow-hidden pt-16">
         {/* Secondary navigation */}
         <header className="pb-4 pt-6 sm:pb-6">
