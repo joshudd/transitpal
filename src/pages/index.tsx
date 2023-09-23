@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Header from '@components/Header'
 const inter = Inter({ subsets: ['latin'] })
+import { EmissionsChart } from './charts'
+
 
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
@@ -61,7 +63,7 @@ const locations = [
 ]
 
 // trip history
-const days = [
+export const days = [
   {
     date: 'Today',
     dateTime: '2023-03-22',
@@ -104,13 +106,17 @@ const days = [
       },
     ],
   },
-]
+] as const;
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
       <main>
         <div className="relative isolate overflow-hidden pt-16">
+          {/* Recharts */}
+          <EmissionsChart />
+
+
           {/* Secondary navigation */}
           <header className="pb-4 pt-6 sm:pb-6">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">

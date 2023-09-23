@@ -8,7 +8,7 @@ interface AppLayoutProps {
 }
 const AppLayout: NextPage<AppLayoutProps> = ({ children, user, signOut }) => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="flex min-h-screen flex-col justify-between">
       <Header user={user} signOut={signOut} />
       {children}
     </main>
