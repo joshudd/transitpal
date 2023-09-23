@@ -140,6 +140,8 @@ export default function Example() {
   const [timeInterval, setTimeInterval] = useState("week"); // 'week', 'month', 'all'
   const [createTripOpen, setCreateTripOpen] = useState(false);
   const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [date, setDate] = useState("");
   const value = useMemo(() => {
     if (timeInterval === "week") {
       return 7;
@@ -159,24 +161,53 @@ export default function Example() {
     <main>
       <Modal open={createTripOpen} setOpen={setCreateTripOpen}>
         <form onSubmit={onTripSubmit}>
+
           <label
-            htmlFor="email"
+            htmlFor="TripForm"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Email
+            Add a New Trip
           </label>
+
           <div className="mt-2">
             <input
               required
               onChange={(e) => setOrigin(e.target.value)}
               value={origin}
-              type="email"
+              type="origin"
               name="email"
               id="email"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              placeholder="you@example.com"
+              placeholder="  Origin"
             />
           </div>
+
+          <div className="mt-2">
+            <input
+              required
+              onChange={(e) => setDestination(e.target.value)}
+              value={origin}
+              type="destination"
+              name="destination"
+              id="destination"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              placeholder="  Destination"
+            />
+          </div>
+
+          <div className="mt-2">
+            <input
+              required
+              onChange={(e) => setDate(e.target.value)}
+              value={origin}
+              type="date"
+              name="date"
+              id="date"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              placeholder="  Date"
+            />
+          </div>
+
           <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
             <button
               type="button"
