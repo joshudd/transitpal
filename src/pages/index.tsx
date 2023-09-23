@@ -2,10 +2,11 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Header from '@components/Header'
 const inter = Inter({ subsets: ['latin'] })
-import { EmissionsChart } from './charts'
+import EmissionsChart from '../common/components/charts/EmissionsChart'
 
 
 import { Fragment, useState } from 'react'
+
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   ArrowDownCircleIcon,
@@ -30,10 +31,11 @@ const navigation = [
   { name: 'Locations', href: '#' },
   { name: 'Settings', href: '#' },
 ]
-const secondaryNavigation = [
-  { name: 'Last 7 days', href: '#', current: true },
-  { name: 'Last 30 days', href: '#', current: false },
-  { name: 'All-time', href: '#', current: false },
+
+export const timeIntervals = [
+  { name: 'Last 7 days', id: 'week'},
+  { name: 'Last 30 days', id: 'month'},
+  { name: 'All-time', id: 'all'},
 ]
 const stats = [
   { name: 'Emissions Prevented', value: '405,091.00 lbs', change: '+4.75%', changeType: 'positive' },
@@ -116,22 +118,24 @@ const days = [
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [timeInterval, setTimeInterval] = useState('week') // 'week', 'month', 'all'
   return (
       <main>
         <div className="relative isolate overflow-hidden pt-16">
-          {/* Recharts */}
-          <EmissionsChart />
-
-
+          
           {/* Secondary navigation */}
           <header className="pb-4 pt-6 sm:pb-6">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
               <h1 className="text-base font-semibold leading-7 text-gray-900">Overview</h1>
               <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
-                {secondaryNavigation.map((item) => (
-                  <a key={item.name} href={item.href} className={item.current ? 'text-indigo-600' : 'text-gray-700'}>
-                    {item.name}
-                  </a>
+                {timeIntervals.map(({name, id}) => (
+                  <button
+                    key={id}
+                    className={id === timeInterval ? 'text-indigo-600' : 'text-gray-700'}
+                    onClick={() => setTimeInterval(id)}
+                  >
+                    {name}
+                  </button>
                 ))}
               </div>
               <a
@@ -185,6 +189,16 @@ export default function Example() {
           </div>
         </div>
         <div className="space-y-16 py-16 xl:space-y-20">
+
+                    
+          {/* Recharts */}
+          <div className="relative w-full h-[100vh] md:h-[50vh] py-64">
+          <div className="absolute inset-0 grid md:grid-cols-2">
+            <div ><EmissionsChart interval=timeInterval /></div>
+            <div ><EmissionsChart /></div>
+          </div>
+          </div>
+
           {/* Recent activity table */}
           <div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

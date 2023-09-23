@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import type { NextPage } from "next";
-import { days } from './index'
+import days from './index'
 interface PageProps {}
 const Page: NextPage<PageProps> = ({}) => {
   return <main className='flex min-h-screen flex-col justify-between'>
