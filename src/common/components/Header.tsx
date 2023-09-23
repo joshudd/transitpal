@@ -6,18 +6,18 @@ import { User } from "firebase/auth";
 import clsx from "clsx";
 import Link from "next/link";
 const navigation = [
-  { name: "Home", href: "#" },
-  { name: "Invoices", href: "#" },
-  { name: "Clients", href: "#" },
-  { name: "Expenses", href: "#" },
+  { name: "Home", href: "/" },
+  { name: "Settings", href: "/settings" },
+  { name: "Trips", href: "/trips" },
+//   { name: "Expenses", href: "#" },
 ];
 interface HeaderProps {
   user: User;
   signOut: () => void;
 }
 const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
-  user,
   signOut,
+  user
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
@@ -40,9 +40,9 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
         </div>
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
           {navigation.map((item, itemIdx) => (
-            <a key={itemIdx} href={item.href}>
+            <Link key={itemIdx} href={item.href}>
               {item.name}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end ">
@@ -138,13 +138,13 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
           </div>
           <div className="mt-2 space-y-2">
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
         </Dialog.Panel>
