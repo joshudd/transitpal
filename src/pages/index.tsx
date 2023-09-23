@@ -110,7 +110,7 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <>
-      <Header />
+
 
       <main>
         <div className="relative isolate overflow-hidden pt-16">
