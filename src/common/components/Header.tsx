@@ -1,8 +1,10 @@
 import { NextPageContext, NextComponentType } from "next";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Bars3Icon, XMarkIcon, BellIcon } from "@heroicons/react/24/solid";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { User } from "firebase/auth";
+import clsx from "clsx";
+import Link from "next/link";
 const navigation = [
   { name: "Home", href: "#" },
   { name: "Invoices", href: "#" },
@@ -43,28 +45,67 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
             </a>
           ))}
         </nav>
-        <div className="flex flex-1 items-center justify-end gap-x-8">
-          <button
-            type="button"
-            className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
-          >
-            <span className="sr-only">View notifications</span>
-            <BellIcon className="h-6 w-6" aria-hidden="true" />
-          </button>
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your profile</span>
-            <img
-              className="h-8 w-8 rounded-full bg-gray-800"
-              src={user.photoURL}
-              alt=""
-            />
-          </a>
-          <button
-            onClick={signOut}
-            className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Sign out
-          </button>
+        <div className="flex flex-1 items-center justify-end ">
+          <div className="flex gap-5">
+            <button
+              type="button"
+              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+            >
+              <span className="sr-only">View notifications</span>
+              <BellIcon className="h-6 w-6" aria-hidden="true" />
+            </button>
+            <Menu as="div" className="relative ml-auto">
+              <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
+                <span className="sr-only">Open options</span>
+                <button href="#" className="">
+                  <span className="sr-only">Your profile</span>
+                  <img
+                    className="h-8 w-8 rounded-full bg-gray-800"
+                    src={user.photoURL}
+                    alt=""
+                  />
+                </button>
+              </Menu.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        href="/settings"
+                        className={clsx(
+                          active ? "bg-gray-50" : "",
+                          "block px-3 py-1 text-sm leading-6 text-gray-900"
+                        )}
+                      >
+                        Settings
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={signOut}
+                        className={clsx(
+                          active ? "bg-gray-50" : "",
+                          "block px-3 py-1 text-sm leading-6 text-gray-900"
+                        )}
+                      >
+                        Logout
+                      </button>
+                    )}
+                  </Menu.Item>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          </div>
         </div>
       </div>
       <Dialog
