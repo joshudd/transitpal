@@ -17,7 +17,11 @@ import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 import TripTimeline from "@/common/components/TripTimeline";
 import { getTransitInfo } from "@/common/utils/mapsUtil";
-import getDaysArr, { getEmissionsSaved, getMoneySaved, getTimeSaved } from "@/common/utils/tripUtil";
+import getDaysArr, {
+  getEmissionsSaved,
+  getMoneySaved,
+  getTimeSaved,
+} from "@/common/utils/tripUtil";
 
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
@@ -89,8 +93,6 @@ export default function Example({ user }: { user: User }) {
     }
   }, [timeInterval]);
   const days = getDaysArr(trips);
-  console.log(getTransitInfo("Minneapolis, MN", "Saint Paul, MN"));
-
 
   const { isLoadingLocations, locations, locationsError } = useLocations({
     id: user.uid,
@@ -99,18 +101,18 @@ export default function Example({ user }: { user: User }) {
     () => [
       {
         name: "Emissions Saved",
-        value: `${getEmissionsSaved(trips, value)} kg`,
+        value: `${getEmissionsSaved(trips, value).toFixed(2)} kg`,
         change: "+4.75%",
         changeType: "positive",
       },
       {
         name: "Money Saved",
-        value: `${getMoneySaved(trips, value)}`,
+        value: `$ ${getMoneySaved(trips, value).toFixed(2)}`,
         change: "+54.02%",
         changeType: "negative",
       },
       {
-        name: "Time Saved",
+        name: "Productivity Saved",
         value: `${getTimeSaved(trips, value)}`,
         change: "+54.02%",
         changeType: "negative",
@@ -124,7 +126,8 @@ export default function Example({ user }: { user: User }) {
     console.log("Log", response);
 
     await addDoc(collection(db, "users", user.uid, "trips"), {
-      response,
+      ...response[0],
+      date: Date.now() / 1000,
     });
   };
   return (
