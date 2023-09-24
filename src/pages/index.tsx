@@ -104,7 +104,7 @@ export default function Example({ user }: { user: User }) {
     interval: 5,
   });
 
-  const days = getDaysArr({user});
+  const days = getDaysArr(trips);
   console.log(getTransitInfo("Minneapolis, MN", "Saint Paul, MN"));
 
   const { isLoadingLocations, locations, locationsError } = useLocations({
