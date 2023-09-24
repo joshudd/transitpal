@@ -50,7 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
   if (user) {
     return (
       <AppLayout signOut={signOutUser} user={user}>
-        <Component {...pageProps} />
+        <Component user={user} {...pageProps} />
       </AppLayout>
     );
   } else if (loading) {
