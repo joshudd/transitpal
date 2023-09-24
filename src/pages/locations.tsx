@@ -14,7 +14,7 @@ const Page: NextPage<PageProps> = ({ user }) => {
     id: user.uid,
   });
   return (
-    <main className="flex  flex-col ">
+    <main className="flex flex-col bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 pt-28">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
           <div className="flex items-center justify-between">
