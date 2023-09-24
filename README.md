@@ -1,40 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TransitPal  |  HackUIowa 23'
+## Inspiration
+As students going to the University of Minnesota, we have started to use and see the benefits of public transit that we otherwise probably wouldn't have. This has motivated us to create a project that promotes it by way of highlighting its sustainability.
+## What it does
+Our web app allows you to enter the trips you take on public transit during your everyday life in order to see visual estimates of the positive impact, both environmentally and financial, that choosing public transportation has.
+## How we built it
+We built our app with Next.js, Firebase, TailwindCSS, and the Google Maps API.
+## Challenges we ran into
+We faced many challenges while working on this project. One of the problems we ran into was realizing that the API we were depending on lacked the exact information we were looking for. This forced us to think flexibly and adjust to a slightly different core functionality for our app.
+## Accomplishments that we're proud of
+As this is all of our's first hackathon, we are definitely proud of the project we created. 
+## What we learned
+All of us learned a lot about developing with TypeScript and querying data from API's. Also, the experience of working together as a team, from ideation to merging commits, was very valuable for us.
+## What's next for TransitPal
+There are many feature we wished that we could have implemented but just didn't have time for: optimizing data compilation so that there is less unnecessary work, an alert system to remind the user when to leave for their desired route, saved locations that ease the logging process. These are some of the main features that could be created in the future.
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
