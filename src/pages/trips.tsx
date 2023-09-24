@@ -7,6 +7,14 @@ import getDaysArr from "@/common/utils/tripUtil";
 import epochToJsDate from "@/common/utils/tripUtil";
 
 interface PageProps {user: User}
+
+function convertEpochToSpecificTimezone(timeEpoch: number, offset: number){
+  var d = new Date(timeEpoch);
+  var utc = d.getTime() + (d.getTimezoneOffset() * 60000);  //This converts to UTC 00:00
+  var nd = new Date(utc + (3600000*offset));
+  return nd.toLocaleString();
+}
+
 const Page: NextPage<PageProps> = ({user}) => {
 
   const { isLoadingTrips, trips, tripsError } = useTrips({
@@ -56,7 +64,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                         <tr >
                           <td className="relative py-5 pr-6">
                             <div className="flex gap-x-6">
-                            {new Date(trip.date* 1000).toLocaleDateString("en-US")}
+                            {(new Date(trip.date* 1000).toLocaleDateString("en-US")).concat("\n", convertEpochToSpecificTimezone(trip.date*1000, -5).slice(11, 22))}
                               <div className="flex-auto">
                                 <div className="flex items-start gap-x-3">
                                   <div className="text-sm font-medium leading-6 text-gray-900">
