@@ -1,23 +1,21 @@
-import { useLocations, useTrips } from "@/common/hooks/data";
-import { User } from "firebase/auth";
-// import { User } from "firebase/auth";
-
+const CO_PER_MILE = 0.367; //IN KG
 export default function getDaysArr(trips: Trip[]) {
   return trips.map((trip) => trip.date);
 }
-
-const CO_PER_MILE = 0.367; //IN KG
-
 export function getEmissionsSaved(trips: Trip[], interval: number) {
   let mileage = 0.0;
-  for (
-    let i = trips.length - 1;
-    i >= 0 &&
-    trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
-    i--
-  ) {
-    mileage += parseFloat(trips[i].distance);
-  }
+    for (
+      let i = trips.length - 1;
+      i >= 0 &&
+      trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
+      i--
+    ) {
+      mileage += parseFloat(trips[i].distance);
+    }
+//   for (let i = 0; i < trips.length; i++) {
+//     mileage += parseFloat(trips[i].distance);
+//     console.log(mileage)
+//   }
 
   return 0.95 * CO_PER_MILE * mileage;
 }
@@ -40,6 +38,7 @@ export function getMoneySaved(trips: Trip[], interval: number) {
 }
 
 export function getTimeSaved(trips: Trip[], interval: number) {
+
   let time = 0.0;
   for (
     let i = trips.length - 1;

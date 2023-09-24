@@ -17,36 +17,12 @@ import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 import TripTimeline from "@/common/components/TripTimeline";
 import { getTransitInfo } from "@/common/utils/mapsUtil";
-import getDaysArr from "@/common/utils/tripUtil";
-
-
-
+import getDaysArr, { getEmissionsSaved, getMoneySaved, getTimeSaved } from "@/common/utils/tripUtil";
 
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
   { name: "Last 30 days", id: "month" },
   { name: "All-time", id: "all" },
-];
-
-const stats = [
-  {
-    name: "Emissions Saved",
-    value: "405,091.00 lbs",
-    change: "+4.75%",
-    changeType: "positive",
-  },
-  {
-    name: "Money Saved",
-    value: "$12,787.00",
-    change: "+54.02%",
-    changeType: "negative",
-  },
-  {
-    name: "Time Saved",
-    value: "34hrs 12min",
-    change: "+54.02%",
-    changeType: "negative",
-  },
 ];
 
 const charts = [
@@ -91,8 +67,6 @@ const locations = [
   },
 ];
 
-
-
 export default function Example({ user }: { user: User }) {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeInterval, setTimeInterval] = useState("week");
@@ -102,13 +76,6 @@ export default function Example({ user }: { user: User }) {
   const { isLoadingTrips, trips, tripsError } = useTrips({
     id: user.uid,
     interval: 5,
-  });
-
-  const days = getDaysArr(trips);
-  console.log(getTransitInfo("Minneapolis, MN", "Saint Paul, MN"));
-
-  const { isLoadingLocations, locations, locationsError } = useLocations({
-    id: user.uid,
   });
   const value = useMemo(() => {
     if (timeInterval === "week") {
@@ -120,16 +87,45 @@ export default function Example({ user }: { user: User }) {
     if (timeInterval === "all") {
       return 100;
     }
-  }, [timeIntervals]);
-  const createTrip = async () => {
+  }, [timeInterval]);
+  const days = getDaysArr(trips);
+  console.log(getTransitInfo("Minneapolis, MN", "Saint Paul, MN"));
 
+
+  const { isLoadingLocations, locations, locationsError } = useLocations({
+    id: user.uid,
+  });
+  const stats = useMemo(
+    () => [
+      {
+        name: "Emissions Saved",
+        value: `${getEmissionsSaved(trips, value)} kg`,
+        change: "+4.75%",
+        changeType: "positive",
+      },
+      {
+        name: "Money Saved",
+        value: `${getMoneySaved(trips, value)}`,
+        change: "+54.02%",
+        changeType: "negative",
+      },
+      {
+        name: "Time Saved",
+        value: `${getTimeSaved(trips, value)}`,
+        change: "+54.02%",
+        changeType: "negative",
+      },
+    ],
+    [trips]
+  );
+
+  const createTrip = async () => {
     let response = await getTransitInfo(origin, destination);
-    console.log("Log", response)
+    console.log("Log", response);
 
     await addDoc(collection(db, "users", user.uid, "trips"), {
-      response
+      response,
     });
-
   };
   return (
     <div>
@@ -350,7 +346,7 @@ export default function Example({ user }: { user: User }) {
                             <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                           </th>
                         </tr>
-                        {[1,2].map((trip) => (
+                        {[1, 2].map((trip) => (
                           // <tr key={trip.id}>
                           //   <td className="relative py-5 pr-6">
                           //     <div className="flex gap-x-6">
@@ -410,7 +406,7 @@ export default function Example({ user }: { user: User }) {
                           //       </div> */}
                           //   </td>
                           // </tr>
-                          <TripTimeline/>
+                          <TripTimeline />
                         ))}
                       </Fragment>
                     ))}
