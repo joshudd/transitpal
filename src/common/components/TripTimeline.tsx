@@ -138,12 +138,12 @@ const TripTimeline: NextComponentType<
   {},
   TripTimelineProps
 > = ({ trip }) => (
-  <div className="py-4">
+  <div className="py-4 w-full">
     <div className="w-full justify-between flex">
       <p>{trip.start_address}</p>
       <p>{trip.end_address}</p>
     </div>
-    <ul role="list" className="relative flex gap-5 justify-between">
+    <ul role="list" className="relative flex gap-5 justify-between items-center w-full">
       <div
         className="absolute inset-0 top-1/2 -translate-y-1/2   w-full h-0.5 bg-gray-200"
         aria-hidden="true"
@@ -151,54 +151,53 @@ const TripTimeline: NextComponentType<
 
       {trip.steps
         .map((item: any) => JSON.parse(item))
-        .map(({ travel_mode, duration, html_instructions }: Step) => (
-          <li key={html_instructions} className="relative z-10 bg-white py-4">
-            <div className="relative flex items-center space-x-3 ">
-              <div className="absolute inset-0 w-full h-full bg-white blur z-0 scale-x-125"></div>
-              <div className="z-10 relative">
-                <span
-                  className={clsx(
-                    travel_mode === "DRIVING"
-                      ? "bg-blue-500"
-                      : travel_mode === "WALKING"
-                      ? "bg-gray-500"
-                      : "bg-green-500",
-                    "h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-blue-500"
-                  )}
-                >
-                  {travel_mode === "DRIVING" ? (
-                    <CarIcon
-                      className="h-5 w-5 text-white"
-                      aria-hidden="true"
-                    />
-                  ) : travel_mode === "TRANSIT" ? (
-                    <TrainIcon
-                      className="h-4 w-4 text-white"
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <WalkIcon
-                      className="h-6 w-6 text-white mt-0.5"
-                      aria-hidden="true"
-                    />
-                  )}
-                </span>
+        .map(({ travel_mode, duration, html_instructions, distance }: Step) => (
+          <>
+            <li key={html_instructions} className="relative z-10 bg-white py-4">
+              <div className="relative flex justify-between items-center space-x-3 w-full">
+                <div className="absolute inset-0 w-full h-full bg-white blur z-0 scale-x-125"></div>
+                <div className="z-10 relative">
+                  <span
+                    className={clsx(
+                      travel_mode === "DRIVING"
+                        ? "bg-blue-500"
+                        : travel_mode === "WALKING"
+                        ? "bg-gray-500"
+                        : "bg-green-500",
+                      "h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-blue-500"
+                    )}
+                  >
+                    {travel_mode === "DRIVING" ? (
+                      <CarIcon
+                        className="h-5 w-5 text-white"
+                        aria-hidden="true"
+                      />
+                    ) : travel_mode === "TRANSIT" ? (
+                      <TrainIcon
+                        className="h-4 w-4 text-white"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <WalkIcon
+                        className="h-6 w-6 text-white mt-0.5"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span>
+                </div>
+               
               </div>
-              <div className="flex   items-center relative z-10 ">
-                <div>
-                  <p className="text-sm text-gray-500">
-                    {duration}{" "}
-                    <a
-                      // href={event.href}
-                      className="font-medium text-gray-900 text-center"
-                    >
-                      {travel_mode}
-                    </a>
-                  </p>
+            </li>
+            <li key={html_instructions} className="relative z-10 bg-white py-4">
+              <div className="relative flex justify-between items-center space-x-3 w-full">
+                <div className="absolute inset-0 w-full h-full bg-white blur z-0 scale-x-125"></div>
+          
+                <div className="relative z-10 ">
+                  <p className="text-sm text-gray-500">{distance} </p>
                 </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </>
         ))}
     </ul>
   </div>
