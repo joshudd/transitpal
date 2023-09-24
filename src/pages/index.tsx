@@ -16,6 +16,7 @@ import { User } from "firebase/auth";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 import TripTimeline from "@/common/components/TripTimeline";
+import { getTransitInfo } from "@/common/utils/mapsUtil";
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
   { name: "Last 30 days", id: "month" },
@@ -143,6 +144,9 @@ export default function Example({ user }: { user: User }) {
     id: user.uid,
     interval: 5,
   });
+
+  console.log(getTransitInfo("Minneapolis, MN", "Saint Paul, MN"));
+
   const { isLoadingLocations, locations, locationsError } = useLocations({
     id: user.uid,
   });
@@ -159,13 +163,13 @@ export default function Example({ user }: { user: User }) {
   }, [timeIntervals]);
   const createTrip = async () => {
 
+    let response = await getTransitInfo(origin, destination);
+    console.log("Log", response)
+
     await addDoc(collection(db, "users", user.uid, "trips"), {
-      origin,
-      destination,
-      distance: "0",
-      status: "Upcoming",
-      description: "Commute",
+      response
     });
+
   };
   return (
     <main>
@@ -386,7 +390,7 @@ export default function Example({ user }: { user: User }) {
                             <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                           </th>
                         </tr>
-                        {trips.map((trip) => (
+                        {[1,2].map((trip) => (
                           // <tr key={trip.id}>
                           //   <td className="relative py-5 pr-6">
                           //     <div className="flex gap-x-6">
