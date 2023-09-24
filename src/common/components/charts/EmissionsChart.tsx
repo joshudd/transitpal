@@ -75,7 +75,7 @@ export default function EmissionsChart ({ value, id, trips2 }: ChartProps) {
   //let days = getDaysArr(trips2);
   let cum: number[] = []; // each element represents a days total of savings, from least to most recent
   let k;
-  if (trips2.length>=6) {
+  if (trips2.length>6) {
     k=6;
   } else {
     k=trips2.length-1;
@@ -101,45 +101,52 @@ export default function EmissionsChart ({ value, id, trips2 }: ChartProps) {
     {
       name: 0,
       //uv: 4000,
-      pv: cum[0],
+      pv: Math.floor(cum[0]),
       amt: 0,
+      unit: "kg",
     },
     {
       name: 1,
       //uv: 3000,
-      pv: cum[1],
+      pv: Math.floor(cum[1]),
       amt: 2210,
+      unit: "kg",
     },
     {
       name: 2,
       //uv: 2000,
-      pv: cum[2],
+      pv: Math.floor(cum[2]),
       amt: 2290,
+      unit: "kg",
     },
     {
       name: 3,
       //uv: 2780,
-      pv: cum[3],
+      pv: Math.floor(cum[3]),
       amt: 2000,
+      unit: "kg",
     },
     {
       name: 4,
       //uv: 1890,
-      pv: cum[4],
+      pv: Math.floor(cum[4]),
       amt: 2181,
+      unit: "kg",
     },
     {
       name: 5,
       //uv: 2390,
-      pv: cum[5],
+      pv: Math.floor(cum[5]),
       amt: 2500,
+      unit: "kg",
     },
     {
       date: new Date().toLocaleDateString(),
       name: 6,
       //uv: 3490,
-      pv: cum[6],
+      pv: Math.floor(cum[6]),
       amt: 2100,
+      unit: "kg",
     }
   ]
 }
@@ -168,6 +175,8 @@ export default function EmissionsChart ({ value, id, trips2 }: ChartProps) {
           dataKey="date" 
           fontSize={12}
         />
+        
+        
         {/* <XAxis dataKey="id" /> */}
         {/* <YAxis /> */}
         <Tooltip contentStyle={{borderRadius: '10px'}} />
