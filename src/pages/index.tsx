@@ -15,7 +15,7 @@ import { useLocations, useTrips } from "@/common/hooks/data";
 import { User } from "firebase/auth";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
-
+import TripTimeline from "@/common/components/TripTimeline";
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
   { name: "Last 30 days", id: "month" },
