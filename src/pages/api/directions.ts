@@ -25,7 +25,11 @@ export default async function handler(
     })
     .then((r) => {
       console.log("Data", JSON.stringify(r.data, null, 2));
-      return r.data;
+      if (r.data.status === "ZERO_RESULTS") {
+        throw new Error("No results");
+      } else {
+        return r.data;
+      }
     })
     .catch((e) => {
       console.log("Catch", e);
