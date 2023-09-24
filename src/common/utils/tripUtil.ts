@@ -4,18 +4,18 @@ export default function getDaysArr(trips: Trip[]) {
 }
 export function getEmissionsSaved(trips: Trip[], interval: number) {
   let mileage = 0.0;
-    for (
-      let i = trips.length - 1;
-      i >= 0 &&
-      trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
-      i--
-    ) {
-      mileage += parseFloat(trips[i].distance);
-    }
-//   for (let i = 0; i < trips.length; i++) {
-//     mileage += parseFloat(trips[i].distance);
-//     console.log(mileage)
-//   }
+  for (
+    let i = trips.length - 1;
+    i >= 0 &&
+    trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
+    i--
+  ) {
+    mileage += parseFloat(trips[i].distance.split(" ")[0]);
+  }
+  //   for (let i = 0; i < trips.length; i++) {
+  //     mileage += parseFloat(trips[i].distance);
+  //     console.log(mileage)
+  //   }
 
   return 0.95 * CO_PER_MILE * mileage;
 }
@@ -28,17 +28,16 @@ export function getMoneySaved(trips: Trip[], interval: number) {
     trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
     i--
   ) {
-    mileage += parseFloat(trips[i].distance);
+    mileage += parseFloat(trips[i].distance.split(" ")[0]);
   }
-  if (mileage * 0.14 - 3 * interval < 0) {
+  if ((mileage * 0.65) - (3 * trips.length) < (3 * .65)) {
     return 0;
   } else {
-    return mileage * 0.14 - 3 * interval;
+    return mileage * 0.65 - (3 * trips.length);
   }
 }
 
 export function getTimeSaved(trips: Trip[], interval: number) {
-
   let time = 0.0;
   for (
     let i = trips.length - 1;
@@ -46,9 +45,16 @@ export function getTimeSaved(trips: Trip[], interval: number) {
     trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
     i--
   ) {
-    for (let j = 0; j < trips[i].legs.length; j++)
-      time += trips[i].legs[j].duration.value;
+    time += trips[i].duration;
   }
+  const duration = 0.66 * time;
+  const hours = Math.floor(duration / (60 * 60));
+  const minutes = Math.floor((duration % (60 * 60)) / 60);
+  const seconds = Math.floor(duration % 60);
 
-  return 0.66 * time; //Let's assume, for the sake of this argument, that non commute takes 5/3 time
+  return (
+    (hours ? `${hours} hrs ` : "") +
+    (minutes ? `${minutes} min` : "") +
+    ` ${seconds} sec`
+  ); //Let's assume, for the sake of this argument, that non commute takes 5/3 time
 }
