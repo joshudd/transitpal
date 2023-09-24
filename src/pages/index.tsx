@@ -31,26 +31,6 @@ export const timeIntervals = [
   { name: "All-time", id: "all", interval: 10000000000 },
 ];
 
-const locations = [
-  {
-    id: 1,
-    name: "Home",
-    imageUrl: "https://tailwindui.com/img/logos/48x48/tuple.svg",
-    address: "1234 Main St",
-  },
-  {
-    id: 2,
-    name: "Work",
-    imageUrl: "https://tailwindui.com/img/logos/48x48/tuple.svg",
-    address: "1234 Main St",
-  },
-  {
-    id: 3,
-    name: "School",
-    imageUrl: "https://tailwindui.com/img/logos/48x48/tuple.svg",
-    address: "1234 Main St",
-  },
-];
 
 export default function Example({ user }: { user: User }) {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -62,7 +42,9 @@ export default function Example({ user }: { user: User }) {
     id: user.uid,
     interval: 5,
   });
-
+  const { isLoadingLocations, locations, locationsError } = useLocations({
+    id: user.uid,
+  });
   const value = useMemo(() => {
     if (timeInterval === 1) {
       return 1;
