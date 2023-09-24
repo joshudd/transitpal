@@ -14,6 +14,7 @@ const Page: NextPage<PageProps> = ({user}) => {
     interval: 5,
   });
   const days = getDaysArr(trips);
+  console.log("Days", days);
 
   
   return (
@@ -38,26 +39,23 @@ const Page: NextPage<PageProps> = ({user}) => {
                 </thead>
                 <tbody>
                   {days.map((day) => (
-                    <Fragment key={day.dateTime}>
+                    <Fragment >
                       <tr className="text-sm leading-6 text-gray-900">
                         <th
                           scope="colgroup"
                           colSpan={3}
                           className="relative isolate py-2 font-semibold"
                         >
-                          <time dateTime={day.dateTime}>{day.date}</time>
+                   
                           <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                           <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                         </th>
                       </tr>
-                      {day.trips.map((trip) => (
-                        <tr key={trip.id}>
+                      {day.map((trip) => (
+                        <tr >
                           <td className="relative py-5 pr-6">
                             <div className="flex gap-x-6">
-                              <trip.icon
-                                className="hidden h-6 w-5 flex-none text-gray-400 sm:block"
-                                aria-hidden="true"
-                              />
+                             
                               <div className="flex-auto">
                                 <div className="flex items-start gap-x-3">
                                   <div className="text-sm font-medium leading-6 text-gray-900">
@@ -72,11 +70,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                                         {trip.status}
                                       </div> */}
                                 </div>
-                                {trip.description ? (
-                                  <div className="mt-1 text-xs leading-5 text-gray-500">
-                                    {trip.description}
-                                  </div>
-                                ) : null}
+                       
                               </div>
                             </div>
                             <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
@@ -92,16 +86,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                           </td>
                           <td className="py-5 text-right">
                             <div className="flex justify-end">
-                              <a
-                                href={trip.href}
-                                className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
-                              >
-                                View
-                                <span className="hidden sm:inline"> trip</span>
-                                {/* <span className="sr-only">
-                                      , invoice #{transaction.invoiceNumber}, {transaction.client}
-                                    </span> */}
-                              </a>
+                    
                             </div>
                             {/* <div className="mt-1 text-xs leading-5 text-gray-500">
                                   Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>

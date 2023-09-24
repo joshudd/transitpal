@@ -1,8 +1,7 @@
-type Trip = {
+export type Trip = {
   start_location: string;
   end_location: string;
-  start_time: number;
-  end_time: number;
+  duration: number;
   distance: string;
   origin: string;
   desition: string;

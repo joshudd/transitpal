@@ -268,8 +268,7 @@ export default function Example({ user }: { user: User }) {
         <div
           className="absolute left-0 top-full -z-10 mt-96 origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"
           aria-hidden="true"
-        >
-        </div>
+        ></div>
       </div>
       <div className="space-y-8">
         {/* Recharts */}
@@ -301,8 +300,7 @@ export default function Example({ user }: { user: User }) {
           <div
             className="absolute left-0 top-full -z-10  origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"
             aria-hidden="true"
-          >
-          </div>
+          ></div>
         </div>
         {/* Recent activity table */}
         <div>
@@ -323,80 +321,67 @@ export default function Example({ user }: { user: User }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {days.map((day) => (
-                      <Fragment key={day.dateTime}>
+                    {days.map((day, idx) => (
+                      <Fragment>
                         <tr className="text-sm leading-6 text-gray-900">
                           <th
                             scope="colgroup"
                             colSpan={3}
                             className="relative isolate py-2 font-semibold"
                           >
-                            <time dateTime={day.dateTime}>{day.date}</time>
+                            {idx === 0
+                              ? "Today"
+                              : idx === 1
+                              ? "This week"
+                              : "This month"}
+
                             <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                             <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                           </th>
                         </tr>
-                        {[1, 2].map((trip) => (
-                          // <tr key={trip.id}>
-                          //   <td className="relative py-5 pr-6">
-                          //     <div className="flex gap-x-6">
-                          //       {/* <trip.icon
-                          //         className="hidden h-6 w-5 flex-none text-gray-400 sm:block"
-                          //         aria-hidden="true"
-                          //       /> */}
-                          //       <div className="flex-auto">
-                          //         <div className="flex items-start gap-x-3">
-                          //           <div className="text-sm font-medium leading-6 text-gray-900">
-                          //             {trip.distance}
-                          //           </div>
-                          //           {/* <div
-                          //               className={clsx(
-                          //                 statuses[trip.status], // this error not sure
-                          //                 'rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset'
-                          //               )}
-                          //             >
-                          //               {trip.status}
-                          //             </div> */}
-                          //         </div>
+                        {day.map((trip) => (
+                          <tr key={trip.id}>
+                            <td className="relative py-5 pr-6">
+                              <div className="flex gap-x-6">
+                                <div className="flex-auto">
+                                  <div className="flex items-start gap-x-3">
+                                    <div className="text-sm font-medium leading-6 text-gray-900">
+                                      {trip.distance}
+                                    </div>
+                                  </div>
 
-                          //         <div className="mt-1 text-xs leading-5 text-gray-500">
-                          //           {trip.origin}
-                          //         </div>
-                          //       </div>
-                          //     </div>
-                          //     <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
-                          //     <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
-                          //   </td>
-                          //   <td className="hidden py-5 pr-6 sm:table-cell">
-                          //     <div className="text-sm leading-6 text-gray-900">
-                          //       {trip.start_location}
-                          //     </div>
-                          //     <div className="text-sm leading-6 text-gray-900">
-                          //       {trip.end_location}
-                          //     </div>
-                          //   </td>
-                          //   <td className="py-5 text-right">
-                          //     <div className="flex justify-end">
-                          //       <a
-                          //         href={trip.href}
-                          //         className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
-                          //       >
-                          //         View
-                          //         <span className="hidden sm:inline">
-                          //           {" "}
-                          //           trip
-                          //         </span>
-                          //         {/* <span className="sr-only">
-                          //             , invoice #{transaction.invoiceNumber}, {transaction.client}
-                          //           </span> */}
-                          //       </a>
-                          //     </div>
-                          //     {/* <div className="mt-1 text-xs leading-5 text-gray-500">
-                          //         Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>
-                          //       </div> */}
-                          //   </td>
-                          // </tr>
-                          <TripTimeline />
+                                  <div className="mt-1 text-xs leading-5 text-gray-500">
+                                    {trip.origin}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
+                              <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
+                            </td>
+                            <td className="hidden py-5 pr-6 sm:table-cell">
+                              <div className="text-sm leading-6 text-gray-900">
+                                {trip.start_location}
+                              </div>
+                              <div className="text-sm leading-6 text-gray-900">
+                                {trip.end_location}
+                              </div>
+                            </td>
+                            <td className="py-5 text-right">
+                              <div className="flex justify-end">
+                                <a
+                                  href={trip.href}
+                                  className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
+                                >
+                                  View
+                                  <span className="hidden sm:inline">
+                                    {" "}
+                                    trip
+                                  </span>
+                                </a>
+                              </div>
+                            </td>{" "}
+                            <TripTimeline />
+                          </tr>
                         ))}
                       </Fragment>
                     ))}
