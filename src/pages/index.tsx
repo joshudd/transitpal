@@ -131,7 +131,7 @@ export default function Example({ user }: { user: User }) {
     });
   };
   return (
-    <div className="">
+    <div className="bg-white h-[100vh]">
       <Modal open={createTripOpen} setOpen={setCreateTripOpen}>
         <form
           className="flex flex-col gap-2"
@@ -156,7 +156,7 @@ export default function Example({ user }: { user: User }) {
                 type="text"
                 name="origin"
                 id="origin"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
                 placeholder="123 Elm St."
               />
             </div>
@@ -176,7 +176,7 @@ export default function Example({ user }: { user: User }) {
                 type="text"
                 name="origin"
                 id="origin"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
                 placeholder="123 Elm St."
               />
             </div>
@@ -191,7 +191,7 @@ export default function Example({ user }: { user: User }) {
             </button>
             <button
               type="submit"
-              className="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+              className="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
             >
               Create
             </button>
@@ -415,7 +415,7 @@ export default function Example({ user }: { user: User }) {
               </h2>
               <Link
                 href="/settings"
-                className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
               >
                 View all<span className="sr-only">, locations</span>
               </Link>

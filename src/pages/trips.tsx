@@ -6,8 +6,8 @@ import { useLocations, useTrips } from "@/common/hooks/data";
 import getDaysArr from "@/common/utils/tripUtil";
 
 
-interface PageProps {}
-const Page: NextPage<PageProps> = () => {
+interface PageProps {user: User}
+const Page: NextPage<PageProps> = ({user}) => {
 
   const { isLoadingTrips, trips, tripsError } = useTrips({
     id: user.uid,

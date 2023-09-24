@@ -81,21 +81,26 @@ export default function EmissionsChart ({ value, id }: ChartProps) {
         }}
       >
         <defs>
-          <linearGradient id="colorUv" x1="1" y1="1" x2="0" y2="0">
-            <stop offset="30%" stopColor="#bdb8fe" stopOpacity={0.5} />
-            <stop offset="95%" stopColor="#ff80b5" stopOpacity={0.5} />
-          </linearGradient>
+          {/* <linearGradient id="colorUv" x1="1" y1="1" x2="0" y2="0">
+            <stop offset="100%" stopColor="#FB3640" stopOpacity={1} />
+            <stop offset="100%" stopColor="#FB3640" stopOpacity={1} />
+          </linearGradient> */}
         </defs>
 
-        <XAxis dataKey="name" type="number" domain={[0, 6]} />
+        <XAxis 
+          dataKey="date" 
+          fontSize={12}
+        />
         {/* <XAxis dataKey="id" /> */}
-        <YAxis />
+        {/* <YAxis /> */}
         <Tooltip />
         <Area
           type="monotone"
           dataKey="pv"
-          stroke="#464E47"
+          stroke="#9F2E34"
+          strokeWidth={3.5}
           fill="#FB3640"
+          fillOpacity={1}
         />
       </AreaChart>
     </ResponsiveContainer>

@@ -19,7 +19,7 @@ const config: Config = {
         tan: '#E5DCC5',
         white: '#FCF7FF',
         primary: '#FB3640',
-        secondary: '#464E47',
+        secondary: '#9F2E34',
       },
     },
   },
