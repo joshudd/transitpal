@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import type { NextPage } from "next";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+
+
 const intervals = [
   {
     date: Date.now(),
@@ -45,6 +47,8 @@ const intervals = [
     ],
   },
 ];
+
+
 interface PageProps {}
 const Page: NextPage<PageProps> = ({}) => {
   return (

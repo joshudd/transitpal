@@ -17,6 +17,11 @@ import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 import TripTimeline from "@/common/components/TripTimeline";
 import { getTransitInfo } from "@/common/utils/mapsUtil";
+import getDaysArr from "@/common/utils/tripUtil";
+
+
+
+
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
   { name: "Last 30 days", id: "month" },
@@ -86,52 +91,6 @@ const locations = [
   },
 ];
 
-// trip history
-const days = [
-  {
-    date: Date.now(),
-    dateTime: Date.now(),
-    trips: [
-      {
-        id: 1,
-        href: "#", // trip summary popup?
-        start_location: "idek", // or address, address probably saved with new id in firebase everytime one is used and has optional name
-        end_location: "locations.id.2", // also idk the actual syntax for this
-        distance: "20 miles",
-        status: "Upcoming", // 'Done', 'Cancelled'
-        description: "Commute", // user input
-        icon: ArrowUpCircleIcon,
-      },
-      {
-        id: 2,
-        href: "#",
-        start_location: "${locations.id.2}",
-        end_location: "Home",
-        distance: "26 miles",
-        status: "Done",
-        description: "Quick trip",
-        icon: ArrowUpCircleIcon,
-      },
-    ],
-  },
-  {
-    date: Date.now(),
-    dateTime: Date.now(),
-    trips: [
-      {
-        id: 2,
-        href: "#",
-        start_location: "locations.id.1",
-        end_location: "locations.id.3",
-        distance: "26 miles",
-        status: "Cancelled",
-        description: "Going to school",
-        icon: ArrowUpCircleIcon,
-      },
-    ],
-  },
-] as const;
-
 
 
 export default function Example({ user }: { user: User }) {
@@ -145,6 +104,7 @@ export default function Example({ user }: { user: User }) {
     interval: 5,
   });
 
+  const days = getDaysArr({user});
   console.log(getTransitInfo("Minneapolis, MN", "Saint Paul, MN"));
 
   const { isLoadingLocations, locations, locationsError } = useLocations({
@@ -172,7 +132,7 @@ export default function Example({ user }: { user: User }) {
 
   };
   return (
-    <main>
+    <div>
       <Modal open={createTripOpen} setOpen={setCreateTripOpen}>
         <form
           className="flex flex-col gap-2"
@@ -563,6 +523,6 @@ export default function Example({ user }: { user: User }) {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
