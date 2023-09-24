@@ -34,9 +34,11 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
           </button>
           <img
             className="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            src="/train.png"
             alt="Your Company"
           />
+          <h1 className="text-lg font-medium leading-6 text-gray-900">transit
+          <span className="font-bold">up</span></h1>
         </div>
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
           {navigation.map((item, itemIdx) => (

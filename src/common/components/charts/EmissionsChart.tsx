@@ -94,8 +94,8 @@ export default function EmissionsChart ({ value, id }: ChartProps) {
         <Area
           type="monotone"
           dataKey="pv"
-          stroke="#FF80B5"
-          fill="url(#colorUv)"
+          stroke="#464E47"
+          fill="#FB3640"
         />
       </AreaChart>
     </ResponsiveContainer>

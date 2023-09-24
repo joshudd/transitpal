@@ -1,56 +1,21 @@
 import { Fragment } from "react";
 import type { NextPage } from "next";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
-
-
-const intervals = [
-  {
-    date: Date.now(),
-    dateTime: Date.now(),
-    trips: [
-      {
-        id: 1,
-        href: "#", // trip summary popup?
-        start_location: "idek", // or address, address probably saved with new id in firebase everytime one is used and has optional name
-        end_location: "locations.id.2", // also idk the actual syntax for this
-        distance: "20 miles",
-        status: "Upcoming", // 'Done', 'Cancelled'
-        description: "Commute", // user input
-        icon: ArrowUpCircleIcon,
-      },
-      {
-        id: 2,
-        href: "#",
-        start_location: "${locations.id.2}",
-        end_location: "Home",
-        distance: "26 miles",
-        status: "Done",
-        description: "Quick trip",
-        icon: ArrowUpCircleIcon,
-      },
-    ],
-  },
-  {
-    date: Date.now(),
-    dateTime: Date.now(),
-    trips: [
-      {
-        id: 2,
-        href: "#",
-        start_location: "locations.id.1",
-        end_location: "locations.id.3",
-        distance: "26 miles",
-        status: "Cancelled",
-        description: "Going to school",
-        icon: ArrowUpCircleIcon,
-      },
-    ],
-  },
-];
+import { User } from "firebase/auth";
+import { useLocations, useTrips } from "@/common/hooks/data";
+import getDaysArr from "@/common/utils/tripUtil";
 
 
 interface PageProps {}
-const Page: NextPage<PageProps> = ({}) => {
+const Page: NextPage<PageProps> = () => {
+
+  const { isLoadingTrips, trips, tripsError } = useTrips({
+    id: user.uid,
+    interval: 5,
+  });
+  const days = getDaysArr(trips);
+
+  
   return (
     <main className="flex min-h-screen flex-col justify-between">
       {/* Recent activity table */}
@@ -72,7 +37,7 @@ const Page: NextPage<PageProps> = ({}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {intervals.map((day) => (
+                  {days.map((day) => (
                     <Fragment key={day.dateTime}>
                       <tr className="text-sm leading-6 text-gray-900">
                         <th
