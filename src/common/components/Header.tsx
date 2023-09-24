@@ -7,9 +7,9 @@ import clsx from "clsx";
 import Link from "next/link";
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Settings", href: "/settings" },
   { name: "Trips", href: "/trips" },
-//   { name: "Expenses", href: "#" },
+  { name: "Settings", href: "/settings" },
+  //   { name: "Expenses", href: "#" },
 ];
 interface HeaderProps {
   user: User;
@@ -17,7 +17,7 @@ interface HeaderProps {
 }
 const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
   signOut,
-  user
+  user,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
@@ -47,13 +47,6 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
         </nav>
         <div className="flex flex-1 items-center justify-end ">
           <div className="flex gap-5">
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">View notifications</span>
-              <BellIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
             <Menu as="div" className="relative ml-auto">
               <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                 <span className="sr-only">Open options</span>

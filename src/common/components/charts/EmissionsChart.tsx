@@ -1,5 +1,5 @@
-import { timeIntervals } from '@/pages';
-import React, { PureComponent } from 'react';
+import { timeIntervals } from "@/pages";
+import React, { PureComponent } from "react";
 import {
   LineChart,
   Line,
@@ -12,12 +12,12 @@ import {
   AreaChart,
   Area,
   ResponsiveContainer,
-} from 'recharts';
-import { AxisDomainItem } from 'recharts/types/util/types';
+} from "recharts";
+import { AxisDomainItem } from "recharts/types/util/types";
 
 const data = [
   {
-    date: '12/3/1999',
+    date: "12/3/1999",
     name: 0,
     uv: 4000,
     pv: 2400,
@@ -61,29 +61,43 @@ const data = [
   },
 ];
 
-export default function EmissionsChart(props: { value: number }) {
-    return (
-      <ResponsiveContainer width="100%" height={200}>
-          <AreaChart
-            width={500}
-            height={200}
-            data={data}
-            syncId="anyId"
-            margin={{
-              top: 10,
-              right: 30,
-              left: 30,
-              bottom: 0,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name"  type="number" domain={[0, props.value]}/>
-            {/* <XAxis dataKey="id" /> */}
-            <YAxis />
-            <Tooltip />
-            <Area type="monotone" dataKey="pv" stroke="#00a5cf" fill="#82ca9d" />
-          </AreaChart>
-        </ResponsiveContainer>
-    );
-  }
+interface ChartProps {
+  value: number;
+  id: string;
+}
+export default function EmissionsChart ({ value, id }: ChartProps) {
+  return (
+    <ResponsiveContainer width="100%" height={200}>
+      <AreaChart
+        width={500}
+        height={200}
+        data={data}
+        syncId={id}
+        margin={{
+          top: 0,
+          right: 0,
+          left: 0,
+          bottom: 0,
+        }}
+      >
+        <defs>
+          <linearGradient id="colorUv" x1="1" y1="1" x2="0" y2="0">
+            <stop offset="30%" stopColor="#bdb8fe" stopOpacity={0.5} />
+            <stop offset="95%" stopColor="#ff80b5" stopOpacity={0.5} />
+          </linearGradient>
+        </defs>
 
+        <XAxis dataKey="name" type="number" domain={[0, 6]} />
+        {/* <XAxis dataKey="id" /> */}
+        <YAxis />
+        <Tooltip />
+        <Area
+          type="monotone"
+          dataKey="pv"
+          stroke="#FF80B5"
+          fill="url(#colorUv)"
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
