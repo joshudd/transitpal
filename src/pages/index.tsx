@@ -345,46 +345,7 @@ export default function Example({ user }: { user: User }) {
                         )}
                         {day.map((trip) => (
                           <tr key={trip.date}>
-                            {/* <td className="relative py-5 pr-6">
-                              <div className="flex gap-x-6">
-                                <div className="flex-auto">
-                                  <div className="flex items-start gap-x-3">
-                                    <div className="text-sm font-medium leading-6 text-gray-900">
-                                      {trip.distance}
-                                    </div>
-                                  </div>
-
-                                  <div className="mt-1 text-xs leading-5 text-gray-500">
-                                    {trip.origin}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
-                              <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
-                            </td>
-                            <td className="hidden py-5 pr-6 sm:table-cell">
-                              <div className="text-sm leading-6 text-gray-900">
-                                {trip.start_location}
-                              </div>
-                              <div className="text-sm leading-6 text-gray-900">
-                                {trip.end_location}
-                              </div>
-                            </td>
-                            <td className="py-5 text-right">
-                              <div className="flex justify-end">
-                                <a
-                                  href={trip.href}
-                                  className="text-sm font-medium leading-6 text-red-600 hover:text-red-500"
-                                >
-                                  View
-                                  <span className="hidden sm:inline">
-                                    {" "}
-                                    trip
-                                  </span>
-                                </a>
-                              </div>
-                            </td> */}
-                            {trip.steps && <TripTimeline timeline={trip?.steps} />}
+                            {trip.steps && <TripTimeline trip={trip} />}
                           </tr>
                         ))}
                       </Fragment>

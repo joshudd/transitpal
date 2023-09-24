@@ -9,25 +9,6 @@ export async function getTransitInfo(
   return parseResponse(response);
 }
 
-type Leg = {
-  start_location: [number, number];
-  end_location: [number, number];
-  duration: number;
-  distance: string;
-  start_address: string;
-  end_address: string;
-  steps: Step[];
-};
-type Step = {
-  start_location: [number, number];
-  end_location: [number, number];
-  duration: number;
-  distance: string;
-  start_address: string;
-  end_address: string;
-  html_instructions: string;
-  travel_mode: string;
-};
 
 function parseResponse(response) {
   const unparsed = response;
