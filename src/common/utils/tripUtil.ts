@@ -5,9 +5,9 @@ export default function getDaysArr(trips: Trip[]) {
   // today, yesterday, within a week, everything else
   let days:Trip[][] = [[],[],[],[]]
   trips.map((trip) => {
-    if (trip.date <= Date.now() - 24 * 60 * 60) { days[0].push(trip) }
-    else if (trip.date <= Date.now() - 2 * 24 * 60 * 60) { days[1].push(trip) }
-    else if (trip.date <= Date.now() - 7 * 24 * 60 * 60) { days[2].push(trip) }
+    if (Date.now() / 1000 - trip.date <= 24 * 60 * 60) { days[0].push(trip) }
+    else if (Date.now() / 1000 - trip.date <=  2 * 24 * 60 * 60) { days[1].push(trip) }
+    else if (Date.now() / 1000 - trip.date <=  7 * 24 * 60 * 60) { days[2].push(trip) }
     else days[3].push(trip)
   });
   return days;
