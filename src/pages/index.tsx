@@ -128,7 +128,7 @@ export default function Example({ user }: { user: User }) {
 
     await addDoc(collection(db, "users", user.uid, "trips"), {
       ...response[0],
-      date: Date.now() / 1000,
+      date: Date.now() / 1000 - (Math.floor(Math.random() * 60 * 24 * 28)),
     });
   };
   return (
@@ -303,7 +303,7 @@ export default function Example({ user }: { user: User }) {
           ></div>
         </div>
         {/* Recent activity table */}
-        <div>
+        <div className="bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
               Recent activity
@@ -320,7 +320,7 @@ export default function Example({ user }: { user: User }) {
                       <th>More details</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="">
                     {days.map((day, idx) => (
                       <Fragment key={idx}>
                         {day.length !== 0 && (
@@ -344,7 +344,7 @@ export default function Example({ user }: { user: User }) {
                           </tr>
                         )}
                         {day.map((trip) => (
-                          <tr key={trip.date}>
+                          <tr className="" key={trip.date}>
                             {trip.steps && <TripTimeline trip={trip} />}
                           </tr>
                         ))}

@@ -81,7 +81,7 @@ const timeline = [
     iconBackground: "bg-green-500",
   },
 ];
-const BusIcon = (props: SVGProps<SVGSVGElement>) => (
+const TrainIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"
@@ -100,12 +100,17 @@ const BusIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const TrainIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg {...props} fillRule="evenodd" clipRule="evenodd">
-    <path
-      fill="currentColor"
-      d="M6 24h-2c-.552 0-1-.448-1-1v-1c-.53 0-1.039-.211-1.414-.586s-.586-.884-.586-1.414v-8c-.552 0-1-.448-1-1v-3c0-.552.448-1 1-1v-4c0-1.657 1.343-3 3-3h16c1.657 0 3 1.343 3 3v4c.552 0 1 .448 1 1v3c0 .552-.448 1-1 1v8c0 .53-.211 1.039-.586 1.414s-.884.586-1.414.586v1c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-1h-10v1c0 .552-.448 1-1 1zm-1.5-7c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm15 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm-5 1h-5c-.276 0-.5.224-.5.5s.224.5.5.5h5c.276 0 .5-.224.5-.5s-.224-.5-.5-.5zm6.5-12.5c0-.276-.224-.5-.5-.5h-17c-.276 0-.5.224-.5.5v8.5s3.098 1 9 1 9-1 9-1v-8.5zm-5-3.5h-8v1h8v-1z"
-    />
+const CarIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="800px"
+    height="800px"
+    viewBox="-4 0 32 32"
+    version="1.1"
+  >
+    <title>car</title>
+    <path d="M19.938 7.188l3.563 7.156c0.063 0.094 0.094 0.219 0.125 0.313 0.219 0.563 0.375 1.344 0.375 1.844v3.406c0 1.063-0.719 1.938-1.719 2.188v2c0 0.969-0.781 1.719-1.719 1.719-0.969 0-1.719-0.75-1.719-1.719v-1.938h-13.688v1.938c0 0.969-0.75 1.719-1.719 1.719-0.938 0-1.719-0.75-1.719-1.719v-2c-1-0.25-1.719-1.125-1.719-2.188v-3.406c0-0.5 0.156-1.281 0.375-1.844 0.031-0.094 0.063-0.219 0.125-0.313l3.563-7.156c0.281-0.531 1.031-1.031 1.656-1.031h12.563c0.625 0 1.375 0.5 1.656 1.031zM5.531 9.344l-1.906 4.344c-0.094 0.156-0.094 0.344-0.094 0.469h16.938c0-0.125 0-0.313-0.094-0.469l-1.906-4.344c-0.25-0.563-1-1.063-1.594-1.063h-9.75c-0.594 0-1.344 0.5-1.594 1.063zM4.688 19.906c1 0 1.781-0.813 1.781-1.844 0-1-0.781-1.781-1.781-1.781s-1.844 0.781-1.844 1.781c0 1.031 0.844 1.844 1.844 1.844zM19.313 19.906c1 0 1.844-0.813 1.844-1.844 0-1-0.844-1.781-1.844-1.781s-1.781 0.781-1.781 1.781c0 1.031 0.781 1.844 1.781 1.844z" />
   </svg>
 );
 const WalkIcon = (props: SVGProps<SVGSVGElement>) => (
@@ -125,17 +130,19 @@ const WalkIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-interface TripTimelineProps {trip: Trip}
+interface TripTimelineProps {
+  trip: Trip;
+}
 const TripTimeline: NextComponentType<
   NextPageContext,
   {},
   TripTimelineProps
 > = ({ trip }) => (
-  <div className="">
-<div className="w-full justify-between flex">
-<p>{trip.start_address}</p>
-<p>{trip.end_address}</p>
-</div>
+  <div className="py-4">
+    <div className="w-full justify-between flex">
+      <p>{trip.start_address}</p>
+      <p>{trip.end_address}</p>
+    </div>
     <ul role="list" className="relative flex gap-5 justify-between">
       <div
         className="absolute inset-0 top-1/2 -translate-y-1/2   w-full h-0.5 bg-gray-200"
@@ -145,7 +152,7 @@ const TripTimeline: NextComponentType<
       {trip.steps
         .map((item: any) => JSON.parse(item))
         .map(({ travel_mode, duration, html_instructions }: Step) => (
-          <li key={html_instructions} className="relative z-10 bg-white py-5">
+          <li key={html_instructions} className="relative z-10 bg-white py-4">
             <div className="relative flex items-center space-x-3 ">
               <div className="absolute inset-0 w-full h-full bg-white blur z-0 scale-x-125"></div>
               <div className="z-10 relative">
@@ -160,18 +167,18 @@ const TripTimeline: NextComponentType<
                   )}
                 >
                   {travel_mode === "DRIVING" ? (
-                    <TrainIcon
+                    <CarIcon
                       className="h-5 w-5 text-white"
                       aria-hidden="true"
                     />
                   ) : travel_mode === "TRANSIT" ? (
-                    <BusIcon
-                      className="h-5 w-5 text-white"
+                    <TrainIcon
+                      className="h-4 w-4 text-white"
                       aria-hidden="true"
                     />
                   ) : (
                     <WalkIcon
-                      className="h-5 w-5 text-white"
+                      className="h-6 w-6 text-white mt-0.5"
                       aria-hidden="true"
                     />
                   )}
@@ -189,7 +196,6 @@ const TripTimeline: NextComponentType<
                     </a>
                   </p>
                 </div>
-               
               </div>
             </div>
           </li>
