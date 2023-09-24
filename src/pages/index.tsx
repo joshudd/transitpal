@@ -118,7 +118,7 @@ export default function Example({ user }: { user: User }) {
         changeType: "negative",
       },
     ],
-    [trips]
+    [trips, value]
   );
 
   const createTrip = async () => {
