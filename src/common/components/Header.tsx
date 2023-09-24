@@ -8,7 +8,7 @@ import Link from "next/link";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Trips", href: "/trips" },
-  { name: "Settings", href: "/settings" },
+  { name: "Locations", href: "/locations" },
   //   { name: "Expenses", href: "#" },
 ];
 interface HeaderProps {
@@ -91,13 +91,13 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href="/settings"
+                        href="/locations"
                         className={clsx(
                           active ? "bg-gray-50" : "",
                           "block px-3 py-1 text-sm leading-6 text-gray-900"
                         )}
                       >
-                        Settings
+                        Locations
                       </Link>
                     )}
                   </Menu.Item>
