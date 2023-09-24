@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useLocations, useTrips } from "@/common/hooks/data";
 // import { User } from "firebase/auth";
 
@@ -12,10 +11,6 @@ export default function getDaysArr({ user }) {
     console.log("Days", days);
     return days;
 }
-
-=======
-import { useLocations, useTrips } from "@/common/hooks/data";
-import { User } from "firebase/auth";
 
 const CO_PER_MILE = 0.367; //IN KG  
  
@@ -61,4 +56,3 @@ export function getTimeSaved({ user }: {user: User}, interval: number) {
     
     return (0.66*time); //Let's assume, for the sake of this argument, that non commute takes 5/3 time
 }
->>>>>>> dfcaa7bb2da804e2cb80c25e85889fd84887ddfc
