@@ -16,8 +16,6 @@ import { User } from "firebase/auth";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 
-import { getTransitInfo } from "@/common/utils/mapsUtil";
-
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
   { name: "Last 30 days", id: "month" },
@@ -145,8 +143,6 @@ export default function Example({ user }: { user: User }) {
     id: user.uid,
     interval: 5,
   });
-  // const result = fetch("/api/directions?origin=Apple Valley, MN&destination=Minneapolis, MN").then((data) => console.log(data.text()));
-console.log(getTransitInfo("20 Soojian Dr, Leicester MA 1524", "337 Russell St, Hadley MA 1035"));
   const { isLoadingLocations, locations, locationsError } = useLocations({
     id: user.uid,
   });
@@ -391,65 +387,66 @@ console.log(getTransitInfo("20 Soojian Dr, Leicester MA 1524", "337 Russell St, 
                           </th>
                         </tr>
                         {trips.map((trip) => (
-                          <tr key={trip.id}>
-                            <td className="relative py-5 pr-6">
-                              <div className="flex gap-x-6">
-                                {/* <trip.icon
-                                  className="hidden h-6 w-5 flex-none text-gray-400 sm:block"
-                                  aria-hidden="true"
-                                /> */}
-                                <div className="flex-auto">
-                                  <div className="flex items-start gap-x-3">
-                                    <div className="text-sm font-medium leading-6 text-gray-900">
-                                      {trip.distance}
-                                    </div>
-                                    {/* <div
-                                        className={clsx(
-                                          statuses[trip.status], // this error not sure
-                                          'rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset'
-                                        )}
-                                      >
-                                        {trip.status}
-                                      </div> */}
-                                  </div>
+                          // <tr key={trip.id}>
+                          //   <td className="relative py-5 pr-6">
+                          //     <div className="flex gap-x-6">
+                          //       {/* <trip.icon
+                          //         className="hidden h-6 w-5 flex-none text-gray-400 sm:block"
+                          //         aria-hidden="true"
+                          //       /> */}
+                          //       <div className="flex-auto">
+                          //         <div className="flex items-start gap-x-3">
+                          //           <div className="text-sm font-medium leading-6 text-gray-900">
+                          //             {trip.distance}
+                          //           </div>
+                          //           {/* <div
+                          //               className={clsx(
+                          //                 statuses[trip.status], // this error not sure
+                          //                 'rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset'
+                          //               )}
+                          //             >
+                          //               {trip.status}
+                          //             </div> */}
+                          //         </div>
 
-                                  <div className="mt-1 text-xs leading-5 text-gray-500">
-                                    {trip.origin}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
-                              <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
-                            </td>
-                            <td className="hidden py-5 pr-6 sm:table-cell">
-                              <div className="text-sm leading-6 text-gray-900">
-                                {trip.start_location}
-                              </div>
-                              <div className="text-sm leading-6 text-gray-900">
-                                {trip.end_location}
-                              </div>
-                            </td>
-                            <td className="py-5 text-right">
-                              <div className="flex justify-end">
-                                <a
-                                  href={trip.href}
-                                  className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
-                                >
-                                  View
-                                  <span className="hidden sm:inline">
-                                    {" "}
-                                    trip
-                                  </span>
-                                  {/* <span className="sr-only">
-                                      , invoice #{transaction.invoiceNumber}, {transaction.client}
-                                    </span> */}
-                                </a>
-                              </div>
-                              {/* <div className="mt-1 text-xs leading-5 text-gray-500">
-                                  Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>
-                                </div> */}
-                            </td>
-                          </tr>
+                          //         <div className="mt-1 text-xs leading-5 text-gray-500">
+                          //           {trip.origin}
+                          //         </div>
+                          //       </div>
+                          //     </div>
+                          //     <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
+                          //     <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
+                          //   </td>
+                          //   <td className="hidden py-5 pr-6 sm:table-cell">
+                          //     <div className="text-sm leading-6 text-gray-900">
+                          //       {trip.start_location}
+                          //     </div>
+                          //     <div className="text-sm leading-6 text-gray-900">
+                          //       {trip.end_location}
+                          //     </div>
+                          //   </td>
+                          //   <td className="py-5 text-right">
+                          //     <div className="flex justify-end">
+                          //       <a
+                          //         href={trip.href}
+                          //         className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
+                          //       >
+                          //         View
+                          //         <span className="hidden sm:inline">
+                          //           {" "}
+                          //           trip
+                          //         </span>
+                          //         {/* <span className="sr-only">
+                          //             , invoice #{transaction.invoiceNumber}, {transaction.client}
+                          //           </span> */}
+                          //       </a>
+                          //     </div>
+                          //     {/* <div className="mt-1 text-xs leading-5 text-gray-500">
+                          //         Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>
+                          //       </div> */}
+                          //   </td>
+                          // </tr>
+                          <TripTimeline/>
                         ))}
                       </Fragment>
                     ))}
