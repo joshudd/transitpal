@@ -122,6 +122,7 @@ export default function Example({ user }: { user: User }) {
   );
 
   const createTrip = async () => {
+    setCreateTripOpen(false);
     let response = await getTransitInfo(origin, destination);
     console.log("Log", response);
 

@@ -93,7 +93,7 @@ export default function EmissionsChart ({ value, id }: ChartProps) {
         />
         {/* <XAxis dataKey="id" /> */}
         {/* <YAxis /> */}
-        <Tooltip />
+        <Tooltip contentStyle={{borderRadius: '10px'}} />
         <Area
           type="monotone"
           dataKey="pv"
