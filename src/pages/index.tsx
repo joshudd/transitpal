@@ -355,7 +355,7 @@ export default function Example({ user }: { user: User }) {
                             </th>
                           </tr>
                         )}
-                        {day.filter((item) => item.steps.length < 6).map((trip) => (
+                        {day.filter((item) => item.steps && item.steps.length < 6).map((trip) => (
                           <tr className="" key={trip.date}>
                             {trip.steps && <TripTimeline trip={trip} />}
                           </tr>
