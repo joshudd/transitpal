@@ -55,75 +55,9 @@ const Page: NextPage<PageProps> = ({ user }) => {
   };
   return (
     <main className="flex  flex-col ">
-      <Modal open={createLocationOpen} setOpen={setCreateLocationOpen}>
-        <form
-          className="flex flex-col gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            createLocation();
-          }}
-        >
-          <h2 className="font-medium text-lg">Create Trip</h2>
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Name
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                type="text"
-                name="name"
-                id="name"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
-                placeholder="Work"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Address
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                onChange={(e) => setAddress(e.target.value)}
-                value={address}
-                type="text"
-                name="address"
-                id="address"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
-                placeholder="123 Elm St."
-              />
-            </div>
-          </div>
-          <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3 w-full">
-            <button
-              type="button"
-              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-              onClick={() => setCreateLocationOpen(false)}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:col-start-2"
-            >
-              Create
-            </button>
-          </div>
-        </form>
-      </Modal>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 pt-28 w-full">
-        <div className="w-full">
-          <div className="flex items-center justify-between w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 pt-28">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+          <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Locations
             </h2>
