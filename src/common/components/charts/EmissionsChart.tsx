@@ -1,5 +1,7 @@
 import { timeIntervals } from "@/pages";
 import React, { PureComponent } from "react";
+import { getEmissionsSaved, getDaysArr } from "@/common/utils/tripUtil"
+import { Step, Trip } from "../../types/data";
 import {
   LineChart,
   Line,
@@ -14,7 +16,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { AxisDomainItem } from "recharts/types/util/types";
-
+/*
 const data = [
   {
     date: "12/3/1999",
@@ -60,12 +62,87 @@ const data = [
     amt: 2100,
   },
 ];
+*/
+//let data[] = [];
 
 interface ChartProps {
   value: number;
   id: string;
+  trips2: Trip[]
 }
-export default function EmissionsChart ({ value, id }: ChartProps) {
+
+export default function EmissionsChart ({ value, id, trips2 }: ChartProps) {
+  //let days = getDaysArr(trips2);
+  let cum: number[] = []; // each element represents a days total of savings, from least to most recent
+  let k;
+  if (trips2.length>=6) {
+    k=6;
+  } else {
+    k=trips2.length-1;
+  }
+  //trips2 = trips2.toReversed();
+  let i;  
+  for (i=k; i>=0 && trips2[i].date >= trips2[k].date - 7*24*60*60; i--) {
+    cum[i] = getEmissionsSaved([trips2[i]], 1);
+  }
+  for (let q=0; q<cum.length; q++) {
+    console.log(cum[q]);
+  }
+  while (i != -1) {
+    cum[i] = 0;
+    i--;
+  }
+  //cum = cum.toReversed();
+  let data;
+  if (trips2.length == 0) {
+    data = [{date: "Nothing to show here!"}]
+  } else {
+  data = [
+    {
+      name: 0,
+      //uv: 4000,
+      pv: cum[0],
+      amt: 0,
+    },
+    {
+      name: 1,
+      //uv: 3000,
+      pv: cum[1],
+      amt: 2210,
+    },
+    {
+      name: 2,
+      //uv: 2000,
+      pv: cum[2],
+      amt: 2290,
+    },
+    {
+      name: 3,
+      //uv: 2780,
+      pv: cum[3],
+      amt: 2000,
+    },
+    {
+      name: 4,
+      //uv: 1890,
+      pv: cum[4],
+      amt: 2181,
+    },
+    {
+      name: 5,
+      //uv: 2390,
+      pv: cum[5],
+      amt: 2500,
+    },
+    {
+      date: new Date().toLocaleDateString(),
+      name: 6,
+      //uv: 3490,
+      pv: cum[6],
+      amt: 2100,
+    }
+  ]
+}
   return (
     <ResponsiveContainer width="100%" height={200}>
       <AreaChart

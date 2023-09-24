@@ -101,7 +101,7 @@ export default function Example({ user }: { user: User }) {
       changeType: "negative",
     },
   ];
-
+  let frxs = 1;
   const days = getDaysArr(trips);
 
   const { isLoadingLocations, locations, locationsError } = useLocations({
@@ -289,25 +289,17 @@ export default function Example({ user }: { user: User }) {
           {/* Secondary navigation */}
 
           {/* Stats */}
-          {/* <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
+          { <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
             <ul className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:px-2 xl:px-0">
-              {charts.map(({ name, value }, statIdx) => (
+        
                 <li
-                  key={name}
-                  className={clsx(
-                    "relative w-full px-6 pt-6 border-gray-900/5",
-                    statIdx % 2 === 1
-                      ? "sm:border-l"
-                      : statIdx === 2
-                      ? "lg:border-l"
-                      : ""
-                  )}
+                  
                 >
-                  <EmissionsChart id={name} value={value || 0} />
+                  <EmissionsChart id={"Emissions Reduction"} value={1} trips2={trips} />
                 </li>
-              ))}
+              
             </ul>
-          </div> */}
+          </div> }
 
           <div
             className="absolute left-0 top-full -z-10  origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"
