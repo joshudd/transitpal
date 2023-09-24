@@ -23,7 +23,7 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
   return (
     <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-1 items-center gap-x-6">
+        <div className="flex flex-1 items-center gap-x-2">
           <button
             type="button"
             className="-m-3 p-3 md:hidden"
@@ -32,13 +32,30 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
             <span className="sr-only">Open main menu</span>
             <Bars3Icon className="h-5 w-5 text-gray-900" aria-hidden="true" />
           </button>
-          <img
-            className="h-8 w-auto"
-            src="/train.png"
-            alt="Your Company"
-          />
-          <h1 className="text-lg font-medium leading-6 text-gray-900">transit
-          <span className="font-bold">up</span></h1>
+          <Link className="bg-red-500 rounded-md" href="/">
+            <svg
+              className="h-8 w-10 mt-1"
+              viewBox="0 0 191 376.25"
+              x="0px"
+              y="0px"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            >
+              <g>
+                <circle cx="78" cy="11" r="11" />
+                <circle cx="113" cy="11" r="11" />
+                <path
+                  fill="#000000"
+                  d="M54 27l83 0c30,0 54,26 54,57l0 107c0,25 -15,46 -37,53l21 57 -15 0 -10 -27 -108 0 -10 27 -16 0 21 -57c-22,-7 -37,-28 -37,-53l0 -107c0,-31 24,-57 54,-57zm90 232l-4 -12 -89 0 -4 12 97 0zm-76 -219l55 0c3,0 5,2 5,4l0 8c0,3 -2,5 -5,5l-55 0c-2,0 -5,-2 -5,-5l0 -8c0,-2 3,-4 5,-4zm82 146c-7,0 -12,5 -12,12 0,7 5,13 12,13 6,0 12,-6 12,-13 0,-7 -6,-12 -12,-12zm-109 0c7,0 12,5 12,12 0,7 -5,13 -12,13 -6,0 -12,-6 -12,-13 0,-7 6,-12 12,-12zm1 -113l107 0c12,0 21,10 21,23l0 34c0,13 -9,23 -21,23l-107 0c-12,0 -21,-10 -21,-23l0 -34c0,-13 9,-23 21,-23z"
+                />
+              </g>
+            </svg>
+          </Link>
+
+          <h1 className="text-xl font-medium leading-6 text-gray-900">
+            transit
+            <span className="font-bold">up</span>
+          </h1>
         </div>
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
           {navigation.map((item, itemIdx) => (
