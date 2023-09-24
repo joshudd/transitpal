@@ -17,7 +17,8 @@ export default async function handler(
       params: {
         origin: q.origin,
         destination: q.destination,
-        travel_mode: "transit",
+        mode: "transit",
+        transit_mode: "rail",
         key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
       },
       timeout: 1000, // milliseconds

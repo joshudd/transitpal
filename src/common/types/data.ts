@@ -3,12 +3,10 @@ export type Trip = {
   end_location: string;
   duration: number;
   distance: string;
-  origin: string;
-  desition: string;
-  savings: string;
-  emissions: string;
+  start_address: string;
+  end_address: string;
   date: number;
-  legs: Leg[];
+  steps: Step[];
 };
 
 export type Leg = {

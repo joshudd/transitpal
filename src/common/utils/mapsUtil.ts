@@ -13,7 +13,7 @@ export async function getTransitInfo(
 function parseResponse(response) {
   const unparsed = response;
 
-  let numLegs = unparsed.routes[0].legs.length;
+  let numLegs = unparsed.routes[0]?.legs?.length;
 
   let current: Leg[] = []; //row corresponds to route, columns are leg lists
 
