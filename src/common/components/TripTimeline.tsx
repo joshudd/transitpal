@@ -138,8 +138,8 @@ const TripTimeline: NextComponentType<
   {},
   TripTimelineProps
 > = ({ trip }) => (
-  <div className="py-4 w-full">
-    <div className="w-full justify-between flex">
+  <div className="py-4">
+    <div className=" justify-between flex">
       <p>{trip.start_address}</p>
       <p>{trip.end_address}</p>
     </div>

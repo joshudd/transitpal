@@ -71,11 +71,16 @@ const Page: NextPage<PageProps> = ({ user }) => {
                         </tr>
                       )}
                       {day
-                        .filter((item) => item.steps && item.steps.length < 6)
+                        // .filter((item) => item.steps && item.steps.length < 6)
                         .map((trip) => (
-                          <tr className="" key={trip.date}>
-                            {trip.steps && <TripTimeline trip={trip} />}
-                          </tr>
+                          <div className="flex flex-row justify-between">
+                            <tr className="flex flex-col" key={trip.date}>
+                              {trip.steps && <TripTimeline trip={trip} />}
+                            </tr>
+                            <div className="px-8 pb-6 pt-14">
+                            {(new Date(trip.date* 1000).toLocaleDateString("en-US")).concat("\n", convertEpochToSpecificTimezone(trip.date*1000, -5).slice(11, 11))}
+                            </div>
+                          </div>
                         ))}
                     </Fragment>
                     // <Fragment key={idx} >
