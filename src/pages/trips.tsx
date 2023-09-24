@@ -49,8 +49,8 @@ const Page: NextPage<PageProps> = ({user}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {days_copy.map((day) => (
-                    <Fragment >
+                  {days_copy.map((day, idx) => (
+                    <Fragment key={idx} >
                       <tr className="text-sm leading-6 text-gray-900">
                         <th
                           scope="colgroup"
@@ -63,7 +63,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                         </th>
                       </tr>
                       {[...day].toReversed().map((trip) => (
-                        <tr >
+                        <tr key={trip.date} >
                           <td className="relative py-5 pr-6">
                             <div className="flex gap-x-6">
                             {(new Date(trip.date* 1000).toLocaleDateString("en-US")).concat("\n", convertEpochToSpecificTimezone(trip.date*1000, -5).slice(11, 22))}

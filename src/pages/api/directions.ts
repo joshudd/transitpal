@@ -17,14 +17,13 @@ export default async function handler(
       params: {
         origin: q.origin,
         destination: q.destination,
-        travel_mode: "TRANSIT",
-
+        travel_mode: "transit",
         key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
       },
       timeout: 1000, // milliseconds
     })
     .then((r) => {
-      console.log("Data", r.data);
+      console.log("Data", JSON.stringify(r.data, null, 2));
       return r.data;
     })
     .catch((e) => {

@@ -124,7 +124,7 @@ export default function Example({ user }: { user: User }) {
   const createTrip = async () => {
     setCreateTripOpen(false);
     let response = await getTransitInfo(origin, destination);
-    console.log("Log", response);
+    console.log("Log!!", response);
 
     await addDoc(collection(db, "users", user.uid, "trips"), {
       ...response[0],
@@ -192,7 +192,7 @@ export default function Example({ user }: { user: User }) {
             </button>
             <button
               type="submit"
-              className="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+              className="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:col-start-2"
             >
               Create
             </button>
@@ -221,7 +221,7 @@ export default function Example({ user }: { user: User }) {
             </div>
             <button
               onClick={() => setCreateTripOpen(true)}
-              className="ml-auto flex items-center gap-x-1 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="ml-auto flex items-center gap-x-1 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
             >
               <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
               New trip
@@ -322,26 +322,30 @@ export default function Example({ user }: { user: User }) {
                   </thead>
                   <tbody>
                     {days.map((day, idx) => (
-                      <Fragment>
-                        <tr className="text-sm leading-6 text-gray-900">
-                          <th
-                            scope="colgroup"
-                            colSpan={3}
-                            className="relative isolate py-2 font-semibold"
-                          >
-                            {idx === 0
-                              ? "Today"
-                              : idx === 1
-                              ? "This week"
-                              : "This month"}
+                      <Fragment key={idx}>
+                        {day.length !== 0 && (
+                          <tr className="text-sm leading-6 text-gray-900">
+                            <th
+                              scope="colgroup"
+                              colSpan={3}
+                              className="relative isolate py-2 font-semibold"
+                            >
+                              {idx === 0
+                                ? "Today"
+                                : idx === 1
+                                ? "Yesterday"
+                                : idx === 2
+                                ? "This week"
+                                : "This month"}
 
-                            <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
-                            <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
-                          </th>
-                        </tr>
+                              <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-zinc-50" />
+                              <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-zinc-50" />
+                            </th>
+                          </tr>
+                        )}
                         {day.map((trip) => (
-                          <tr key={trip.id}>
-                            <td className="relative py-5 pr-6">
+                          <tr key={trip.date}>
+                            {/* <td className="relative py-5 pr-6">
                               <div className="flex gap-x-6">
                                 <div className="flex-auto">
                                   <div className="flex items-start gap-x-3">
@@ -370,7 +374,7 @@ export default function Example({ user }: { user: User }) {
                               <div className="flex justify-end">
                                 <a
                                   href={trip.href}
-                                  className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
+                                  className="text-sm font-medium leading-6 text-red-600 hover:text-red-500"
                                 >
                                   View
                                   <span className="hidden sm:inline">
@@ -379,8 +383,8 @@ export default function Example({ user }: { user: User }) {
                                   </span>
                                 </a>
                               </div>
-                            </td>{" "}
-                            <TripTimeline />
+                            </td> */}
+                            {trip.steps && <TripTimeline timeline={trip?.steps} />}
                           </tr>
                         ))}
                       </Fragment>

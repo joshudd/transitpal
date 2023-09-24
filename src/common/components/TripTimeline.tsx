@@ -10,8 +10,6 @@ import { SVGProps } from "react";
 
 const timeline = [
   {
-    id: 1,
-    content: "Train",
     target: "Front End Developer",
     href: "#",
     date: "Sep 20",
@@ -89,7 +87,7 @@ const TripTimeline: NextComponentType<
   NextPageContext,
   {},
   TripTimelineProps
-> = ({}) => (
+> = ({timeline}) => (
   <div className="">
     <ul role="list" className="relative flex gap-10 justify-between">
       <div
@@ -97,34 +95,34 @@ const TripTimeline: NextComponentType<
         aria-hidden="true"
       />
 
-      {timeline.map((event, eventIdx) => (
-        <li className="relative z-10 bg-white py-5" key={event.id}>
+      {timeline.map(item => JSON.parse(item)).map((event, eventIdx) => (
+        <li className="relative z-10 bg-white py-5" >
           <div className="relative flex items-center space-x-3 ">
             <div className="absolute inset-0 w-full h-full bg-white blur z-0 scale-x-125"></div>
             <div className="z-10 relative">
               <span
                 className={clsx(
-                  event.iconBackground,
-                  "h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white"
+                  // event.iconBackground,
+                  "h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-blue-500"
                 )}
               >
-                <event.icon className="h-5 w-5 text-white" aria-hidden="true" />
+                {/* <event.icon className="h-5 w-5 text-white" aria-hidden="true" /> */}
               </span>
             </div>
             <div className="flex   items-center relative z-10 ">
               <div>
                 <p className="text-sm text-gray-500">
-                  {event.content}{" "}
+                  {event.date}{" "}
                   <a
-                    href={event.href}
+                    // href={event.href}
                     className="font-medium text-gray-900 text-center"
                   >
-                    {event.target}
+                    {event.travel_mode}
                   </a>
                 </p>
               </div>
               <div className="whitespace-nowrap text-right text-sm text-gray-500">
-                <time dateTime={event.datetime}>{event.date}</time>
+                {/* <time dateTime={event.datetime}>{event.date}</time> */}
               </div>
             </div>
           </div>

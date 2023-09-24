@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@modules/auth/client";
+import { Trip } from "../types/data";
 type Location = {
   address: string;
   color: string;
