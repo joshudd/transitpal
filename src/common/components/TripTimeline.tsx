@@ -138,10 +138,12 @@ const TripTimeline: NextComponentType<
   {},
   TripTimelineProps
 > = ({ trip }) => (
+
   <div className="py-4">
     <div className=" justify-between flex">
       <p>{trip.start_address}</p>
       <p>{trip.end_address}</p>
+
     </div>
     <ul role="list" className="relative flex gap-5 justify-between items-center w-full">
       <div

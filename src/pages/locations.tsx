@@ -1,11 +1,27 @@
+import Modal from "@/common/components/Modal";
 import { useLocations } from "@/common/hooks/data";
+import { db } from "@/modules/auth/client";
 import { Menu, Transition } from "@headlessui/react";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import {
+  EllipsisHorizontalIcon,
+  PlusSmallIcon,
+} from "@heroicons/react/24/solid";
 import clsx from "clsx";
+import { randomUUID } from "crypto";
 import { User } from "firebase/auth";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import type { NextPage } from "next";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useId, useState } from "react";
 interface PageProps {
   user: User;
 }
@@ -13,14 +29,111 @@ const Page: NextPage<PageProps> = ({ user }) => {
   const { isLoadingLocations, locations, locationsError } = useLocations({
     id: user.uid,
   });
+  const [createLocationOpen, setCreateLocationOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const createLocation = async () => {
+    setCreateLocationOpen(false);
+    await addDoc(collection(db, "users", user.uid, "locations"), {
+      created_at: Date.now() / 1000,
+      name,
+      address,
+      id: Math.random() * 100000,
+    });
+  };
+  const deleteLocation = async (id: string) => {
+    const q = await query(
+      collection(db, "users", user.uid, "locations"),
+      where("id", "==", id)
+    );
+    const querySnapshot = await getDocs(q);
+    const docs: Location[] = [];
+    await querySnapshot.forEach((doc) => {
+      docs.push({ ...doc.data(), id: doc.id });
+    });
+    await deleteDoc(doc(db, "users", user.uid, "locations", docs[0].id));
+  };
   return (
-    <main className="flex flex-col bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 pt-28">
-        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-          <div className="flex items-center justify-between">
+    <main className="flex  flex-col ">
+      <Modal open={createLocationOpen} setOpen={setCreateLocationOpen}>
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            createLocation();
+          }}
+        >
+          <h2 className="font-medium text-lg">Create Trip</h2>
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Name
+            </label>
+            <div className="mt-2">
+              <input
+                required
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                type="text"
+                name="name"
+                id="name"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
+                placeholder="Work"
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Address
+            </label>
+            <div className="mt-2">
+              <input
+                required
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
+                type="text"
+                name="address"
+                id="address"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
+                placeholder="123 Elm St."
+              />
+            </div>
+          </div>
+          <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3 w-full">
+            <button
+              type="button"
+              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+              onClick={() => setCreateLocationOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="inline-flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:col-start-2"
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 pt-28 w-full">
+        <div className="w-full">
+          <div className="flex items-center justify-between w-full">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Locations
             </h2>
+            <button
+              onClick={() => setCreateLocationOpen(true)}
+              className="ml-auto flex items-center gap-x-1 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            >
+              <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
+              New Location
+            </button>
           </div>
           <ul
             role="list"
@@ -67,23 +180,23 @@ const Page: NextPage<PageProps> = ({ user }) => {
                                 "block px-3 py-1 text-sm leading-6 text-gray-900"
                               )}
                             >
-                              View
+                              Edit
                               <span className="sr-only">, {location.name}</span>
                             </a>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <button
+                              onClick={() => deleteLocation(location.id)}
                               className={clsx(
                                 active ? "bg-gray-50" : "",
                                 "block px-3 py-1 text-sm leading-6 text-gray-900"
                               )}
                             >
-                              Edit
+                              Delete
                               <span className="sr-only">, {location.name}</span>
-                            </a>
+                            </button>
                           )}
                         </Menu.Item>
                       </Menu.Items>
