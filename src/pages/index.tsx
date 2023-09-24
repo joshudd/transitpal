@@ -2,6 +2,7 @@ import EmissionsChart from "@components/charts/EmissionsChart";
 import SavingsChart from "@components/charts/SavingsChart";
 import { Fragment, useMemo, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import { Client } from "@googlemaps/google-maps-services-js";
 import {
   ArrowUpCircleIcon,
   EllipsisHorizontalIcon,
@@ -12,6 +13,8 @@ import Modal from "@components/Modal";
 import Link from "next/link";
 import { useLocations, useTrips } from "@/common/hooks/data";
 import { User } from "firebase/auth";
+import { addDoc, collection, doc } from "firebase/firestore";
+import { db } from "@/modules/auth/client";
 
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
@@ -152,11 +155,26 @@ export default function Example({ user }: { user: User }) {
       return 100;
     }
   }, [timeIntervals]);
-  const createTrip = () => {};
+  const createTrip = async () => {
+
+    await addDoc(collection(db, "users", user.uid, "trips"), {
+      origin,
+      destination,
+      distance: "0",
+      status: "Upcoming",
+      description: "Commute",
+    });
+  };
   return (
     <main>
       <Modal open={createTripOpen} setOpen={setCreateTripOpen}>
-        <form className="flex flex-col gap-2" onSubmit={createTrip}>
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            createTrip();
+          }}
+        >
           <h2 className="font-medium text-lg">Create Trip</h2>
           <div>
             <label
@@ -523,13 +541,12 @@ export default function Example({ user }: { user: User }) {
                     </Menu>
                   </div>
                   <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
-                  
                     <div className="flex justify-between gap-x-4 py-3">
                       <dt className="text-gray-500">Address</dt>
                       <dd className="flex items-start gap-x-2">
-                        <div className="font-medium text-gray-900">{location.address}</div>{" "}
-                 
-        
+                        <div className="font-medium text-gray-900">
+                          {location.address}
+                        </div>{" "}
                       </dd>
                     </div>
                   </dl>
