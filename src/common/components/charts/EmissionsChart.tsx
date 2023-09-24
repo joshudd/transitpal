@@ -96,6 +96,7 @@ export default function EmissionsChart ({ value, id }: ChartProps) {
           dataKey="pv"
           stroke="#9F2E34"
           fill="#FB3640"
+          fillOpacity={1}
         />
       </AreaChart>
     </ResponsiveContainer>
