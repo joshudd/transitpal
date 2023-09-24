@@ -6,12 +6,13 @@ export default function getDaysArr(trips: Trip[]) {
   console.log(trips, Date.now());
   // today, yesterday, within a week
   let days:Trip[][] = [[],[],[]]
-  trips.map((trip) => {
-    if (trip.date >= Date.now() - 24 * 60 * 60) { days[0].push(trip) }
-    else if (trip.date >= Date.now() - 2 * 24 * 60 * 60) { days[1].push(trip) }
-    else if (trip.date >= Date.now() - 7 * 24 * 60 * 60) { days[2].push(trip) }
+  trips.every((trip) => {
+    if (trip.date <= Date.now() - 24 * 60 * 60) { days[0].push(trip) }
+    else if (trip.date <= Date.now() - 2 * 24 * 60 * 60) { days[1].push(trip) }
+    else if (trip.date <= Date.now() - 7 * 24 * 60 * 60) { days[2].push(trip) }
   });
-  return days || [];
+  console.log(days);
+  return days;
 }
 
 export function getEmissionsSaved(trips: Trip[], interval: number) {
