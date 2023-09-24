@@ -16,6 +16,8 @@ import { User } from "firebase/auth";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 
+import { getTransitInfo } from "@/common/utils/mapsUtil";
+
 export const timeIntervals = [
   { name: "Last 7 days", id: "week" },
   { name: "Last 30 days", id: "month" },
@@ -131,6 +133,8 @@ const days = [
   },
 ] as const;
 
+
+
 export default function Example({ user }: { user: User }) {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeInterval, setTimeInterval] = useState("week");
@@ -141,6 +145,8 @@ export default function Example({ user }: { user: User }) {
     id: user.uid,
     interval: 5,
   });
+  // const result = fetch("/api/directions?origin=Apple Valley, MN&destination=Minneapolis, MN").then((data) => console.log(data.text()));
+console.log(getTransitInfo("20 Soojian Dr, Leicester MA 1524", "337 Russell St, Hadley MA 1035"));
   const { isLoadingLocations, locations, locationsError } = useLocations({
     id: user.uid,
   });
