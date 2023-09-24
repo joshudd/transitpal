@@ -13,7 +13,16 @@ import Modal from "@components/Modal";
 import Link from "next/link";
 import { useLocations, useTrips } from "@/common/hooks/data";
 import { User } from "firebase/auth";
-import { addDoc, collection, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/modules/auth/client";
 import TripTimeline from "@/common/components/TripTimeline";
 import { getTransitInfo } from "@/common/utils/mapsUtil";
@@ -25,12 +34,11 @@ import getDaysArr, {
 
 export const timeIntervals = [
   { name: "Today", id: "today", interval: 1 },
-  { name: "Yesterday", id: "yesterday", interval: 2},
+  { name: "Yesterday", id: "yesterday", interval: 2 },
   { name: "Last 7 days", id: "week", interval: 7 },
   { name: "Last 30 days", id: "month", interval: 30 },
   { name: "All-time", id: "all", interval: 10000000000 },
 ];
-
 
 export default function Example({ user }: { user: User }) {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -109,7 +117,18 @@ export default function Example({ user }: { user: User }) {
     ],
     [trips, value]
   );
-
+  const deleteLocation = async (id: string) => {
+    const q = await query(
+      collection(db, "users", user.uid, "locations"),
+      where("id", "==", id)
+    );
+    const querySnapshot = await getDocs(q);
+    const docs: Location[] = [];
+    await querySnapshot.forEach((doc) => {
+      docs.push({ ...doc.data(), id: doc.id });
+    });
+    await deleteDoc(doc(db, "users", user.uid, "locations", docs[0].id));
+  };
   const createTrip = async () => {
     setCreateTripOpen(false);
     let response = await getTransitInfo(origin, destination);
@@ -117,7 +136,7 @@ export default function Example({ user }: { user: User }) {
 
     await addDoc(collection(db, "users", user.uid, "trips"), {
       ...response[0],
-      date: Date.now() / 1000 - (Math.floor(Math.random() * 60 * 24 * 28)),
+      date: Date.now() / 1000 - Math.floor(Math.random() * 60 * 24 * 28),
     });
   };
   return (
@@ -202,8 +221,7 @@ export default function Example({ user }: { user: User }) {
                   className={
                     interval === timeInterval ? "text-primary" : "text-gray-700"
                   }
-                  onClick={() => setTimeInterval(interval)
-                            }
+                  onClick={() => setTimeInterval(interval)}
                 >
                   {name}
                 </button>
@@ -333,11 +351,13 @@ export default function Example({ user }: { user: User }) {
                             </th>
                           </tr>
                         )}
-                        {day.filter((item) => item.steps && item.steps.length < 6).map((trip) => (
-                          <tr className="" key={trip.date}>
-                            {trip.steps && <TripTimeline trip={trip} />}
-                          </tr>
-                        ))}
+                        {day
+                          .filter((item) => item.steps && item.steps.length < 6)
+                          .map((trip) => (
+                            <tr className="" key={trip.date}>
+                              {trip.steps && <TripTimeline trip={trip} />}
+                            </tr>
+                          ))}
                       </Fragment>
                     ))}
                   </tbody>
@@ -397,23 +417,7 @@ export default function Example({ user }: { user: User }) {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={clsx(
-                                  active ? "bg-gray-50" : "",
-                                  "block px-3 py-1 text-sm leading-6 text-gray-900"
-                                )}
-                              >
-                                View
-                                <span className="sr-only">
-                                  , {location.name}
-                                </span>
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
+                          {/* <Menu.Item>
                             {({ active }) => (
                               <a
                                 href="#"
@@ -427,6 +431,22 @@ export default function Example({ user }: { user: User }) {
                                   , {location.name}
                                 </span>
                               </a>
+                            )}
+                          </Menu.Item> */}
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={() => deleteLocation(location.id)}
+                                className={clsx(
+                                  active ? "bg-gray-50" : "",
+                                  "block px-3 py-1 text-sm leading-6 text-gray-900"
+                                )}
+                              >
+                                Delete
+                                <span className="sr-only">
+                                  , {location.name}
+                                </span>
+                              </button>
                             )}
                           </Menu.Item>
                         </Menu.Items>
