@@ -104,10 +104,6 @@ export default function Example({ user }: { user: User }) {
 
   const days = getDaysArr(trips);
 
-  const { isLoadingLocations, locations, locationsError } = useLocations({
-    id: user.uid,
-  });
-
   const stats = useMemo(
     () => [
       {
@@ -377,7 +373,7 @@ export default function Example({ user }: { user: User }) {
                 Recent locations
               </h2>
               <Link
-                href="/settings"
+                href="/locations"
                 className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
               >
                 View all<span className="sr-only">, locations</span>
