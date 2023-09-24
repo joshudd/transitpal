@@ -73,7 +73,7 @@ const Page: NextPage<PageProps> = ({ user }) => {
                       {day
                         // .filter((item) => item.steps && item.steps.length < 6)
                         .map((trip) => (
-                          <div className="flex flex-row justify-between">
+                          <div key={trip.date} className="flex flex-row justify-between">
                             <tr className="flex flex-col" key={trip.date}>
                               {trip.steps && <TripTimeline trip={trip} />}
                             </tr>
