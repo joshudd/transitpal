@@ -21,7 +21,7 @@ export function getEmissionsSaved(trips: Trip[], interval: number) {
     trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
     i--
   ) {
-    mileage += parseFloat(trips[i].distance.split(" ")[0]);
+    if (trips && trips[i] && trips[i].distance) { mileage = mileage + parseFloat(trips[i].distance.split(" ")[0]); }
   }
   //   for (let i = 0; i < trips.length; i++) {
   //     mileage += parseFloat(trips[i].distance);
