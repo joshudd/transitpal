@@ -54,7 +54,7 @@ const Header: NextComponentType<NextPageContext, {}, HeaderProps> = ({
 
           <h1 className="text-xl font-medium leading-6 text-gray-900">
             transit
-            <span className="font-bold">up</span>
+            <span className="font-bold">pal</span>
           </h1>
         </div>
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">

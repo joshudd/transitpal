@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
+  GithubAuthProvider,
 } from "firebase/auth";
 
 import { firebaseApp } from "@/modules/auth/client";
@@ -14,7 +15,8 @@ import AppLayout from "@layouts/AppLayout";
 import Login from "@/modules/auth/Login";
 const auth = getAuth(firebaseApp);
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 export default function App({ Component, pageProps }: AppProps) {
   const [user, loading, error] = useAuthState(auth);
   const signOutUser = () => signOut(auth);
@@ -22,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const signIn = (method: string) => {
     switch (method) {
       case "google":
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, googleProvider)
           .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -43,6 +45,27 @@ export default function App({ Component, pageProps }: AppProps) {
             // ...
           });
         break;
+      case "github":
+        signInWithPopup(auth, githubProvider)
+          .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GithubAuthProvider.credentialFromResult(result);
+            const token = credential?.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GithubAuthProvider.credentialFromError(error);
+            // ...
+          });
       default:
         break;
     }

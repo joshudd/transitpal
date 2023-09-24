@@ -247,7 +247,7 @@ export default function Example({ user }: { user: User }) {
                 <dt className="text-sm font-medium leading-6 text-gray-500">
                   {stat.name}
                 </dt>
-                <dd
+                {/* <dd
                   className={clsx(
                     stat.changeType === "negative"
                       ? "text-rose-600"
@@ -256,7 +256,7 @@ export default function Example({ user }: { user: User }) {
                   )}
                 >
                   {stat.change}
-                </dd>
+                </dd> */}
                 <dd className="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
                   {stat.value}
                 </dd>
