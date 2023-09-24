@@ -1,5 +1,4 @@
 import EmissionsChart from "@components/charts/EmissionsChart";
-import SavingsChart from "@components/charts/SavingsChart";
 import { Fragment, useMemo, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Client } from "@googlemaps/google-maps-services-js";
@@ -63,26 +62,26 @@ export default function Example({ user }: { user: User }) {
     }
   }, [timeInterval]);
 
-  const charts = [
-    {
-      name: "Emissions Saved",
-      value: 30,
-      change: "+4.75%",
-      changeType: "positive",
-    },
-    {
-      name: "Money Saved",
-      value: 40,
-      change: "+54.02%",
-      changeType: "negative",
-    },
-    {
-      name: "Time Saved",
-      value: 70,
-      change: "+54.02%",
-      changeType: "negative",
-    },
-  ];
+  // const charts = [
+  //   {
+  //     name: "Emissions Saved",
+  //     value: 30,
+  //     change: "+4.75%",
+  //     changeType: "positive",
+  //   },
+  //   {
+  //     name: "Money Saved",
+  //     value: 40,
+  //     change: "+54.02%",
+  //     changeType: "negative",
+  //   },
+  //   {
+  //     name: "Time Saved",
+  //     value: 70,
+  //     change: "+54.02%",
+  //     changeType: "negative",
+  //   },
+  // ];
 
   const days = getDaysArr(trips);
 
@@ -267,8 +266,8 @@ export default function Example({ user }: { user: User }) {
           {/* Secondary navigation */}
 
           {/* Stats */}
-          {/* <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
-            <ul className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:px-2 xl:px-0">
+          <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
+            {/* <ul className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:px-2 xl:px-0">
               {charts.map(({ name, value }, statIdx) => (
                 <li
                   key={name}
@@ -280,12 +279,12 @@ export default function Example({ user }: { user: User }) {
                       ? "lg:border-l"
                       : ""
                   )}
-                >
-                  <EmissionsChart id={name} value={value || 0} />
-                </li>
-              ))}
-            </ul>
-          </div> */}
+                > */}
+                  <EmissionsChart id={"money"} value={money_data || 0} />
+                {/* </li> */}
+
+            {/* </ul> */}
+          </div>
 
           <div
             className="absolute left-0 top-full -z-10  origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"
