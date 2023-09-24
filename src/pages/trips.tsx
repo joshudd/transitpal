@@ -4,8 +4,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import { User } from "firebase/auth";
 import { useLocations, useTrips } from "@/common/hooks/data";
 import getDaysArr from "@/common/utils/tripUtil";
-import getDate from "@/common/utils/tripUtil";
-
+import epochToJsDate from "@/common/utils/tripUtil";
 
 interface PageProps {user: User}
 const Page: NextPage<PageProps> = ({user}) => {
@@ -16,6 +15,7 @@ const Page: NextPage<PageProps> = ({user}) => {
   });
   const days = getDaysArr(trips);
   console.log("Days", days);
+
 
   
   return (
@@ -56,7 +56,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                         <tr >
                           <td className="relative py-5 pr-6">
                             <div className="flex gap-x-6">
-                            {trip.date}
+                            {new Date(trip.date* 1000).toLocaleDateString("en-US")}
                               <div className="flex-auto">
                                 <div className="flex items-start gap-x-3">
                                   <div className="text-sm font-medium leading-6 text-gray-900">
@@ -79,10 +79,12 @@ const Page: NextPage<PageProps> = ({user}) => {
                           </td>
                           <td className="hidden py-5 pr-6 sm:table-cell">
                             <div className="text-sm leading-6 text-gray-900">
-                              {trip.start_address}
+                              Start: {' '}{' '}
+                              <span className="font-bold">{trip.start_address}</span>
                             </div>
                             <div className="text-sm leading-6 text-gray-900">
-                              {trip.end_address}
+                              End: {' '}{' '}
+                              <span className="font-bold">{trip.end_address}</span>
                             </div>
                           </td>
                           <td className="py-5 text-right">
