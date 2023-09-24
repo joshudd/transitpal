@@ -4,6 +4,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import { User } from "firebase/auth";
 import { useLocations, useTrips } from "@/common/hooks/data";
 import getDaysArr from "@/common/utils/tripUtil";
+import getDate from "@/common/utils/tripUtil";
 
 
 interface PageProps {user: User}
@@ -55,7 +56,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                         <tr >
                           <td className="relative py-5 pr-6">
                             <div className="flex gap-x-6">
-                             
+                            {trip.date}
                               <div className="flex-auto">
                                 <div className="flex items-start gap-x-3">
                                   <div className="text-sm font-medium leading-6 text-gray-900">
@@ -78,10 +79,10 @@ const Page: NextPage<PageProps> = ({user}) => {
                           </td>
                           <td className="hidden py-5 pr-6 sm:table-cell">
                             <div className="text-sm leading-6 text-gray-900">
-                              {trip.start_location}
+                              {trip.start_address}
                             </div>
                             <div className="text-sm leading-6 text-gray-900">
-                              {trip.end_location}
+                              {trip.end_address}
                             </div>
                           </td>
                           <td className="py-5 text-right">

@@ -71,3 +71,18 @@ export function getEmissionsSaved(trips: Trip[], interval: number) {
         ` ${seconds} sec`
       ); //Let's assume, for the sake of this argument, that non commute takes 5/3 time
     }
+
+
+    export function getDay(trip: Trip) {
+      let time = trip.duration;
+      const duration = 0.66 * time;
+      const hours = Math.floor(duration / (60 * 60));
+      const minutes = Math.floor((duration % (60 * 60)) / 60);
+      const seconds = Math.floor(duration % 60);
+
+      return (
+        (hours ? `${hours} hrs ` : "") +
+        (minutes ? `${minutes} min` : "") +
+        ` ${seconds} sec`
+      ); //Let's assume, for the sake of this argument, that non commute takes 5/3 time
+    }
