@@ -24,30 +24,11 @@ import getDaysArr, {
 } from "@/common/utils/tripUtil";
 
 export const timeIntervals = [
-  { name: "Last 7 days", id: "week" },
-  { name: "Last 30 days", id: "month" },
-  { name: "All-time", id: "all" },
-];
-
-const charts = [
-  {
-    name: "Emissions Saved",
-    value: 30,
-    change: "+4.75%",
-    changeType: "positive",
-  },
-  {
-    name: "Money Saved",
-    value: 40,
-    change: "+54.02%",
-    changeType: "negative",
-  },
-  {
-    name: "Time Saved",
-    value: 70,
-    change: "+54.02%",
-    changeType: "negative",
-  },
+  { name: "Today", id: "today", interval: 1 },
+  { name: "Yesterday", id: "yesterday", interval: 2},
+  { name: "Last 7 days", id: "week", interval: 7 },
+  { name: "Last 30 days", id: "month", interval: 30 },
+  { name: "All-time", id: "all", interval: 10000000000 },
 ];
 
 const locations = [
@@ -73,7 +54,7 @@ const locations = [
 
 export default function Example({ user }: { user: User }) {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [timeInterval, setTimeInterval] = useState("week");
+  const [timeInterval, setTimeInterval] = useState(7);
   const [createTripOpen, setCreateTripOpen] = useState(false);
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -81,40 +62,70 @@ export default function Example({ user }: { user: User }) {
     id: user.uid,
     interval: 5,
   });
+
   const value = useMemo(() => {
-    if (timeInterval === "week") {
+    if (timeInterval === 1) {
+      return 1;
+    }
+    if (timeInterval === 2) {
+      return 2;
+    }
+    if (timeInterval === 7) {
       return 7;
     }
-    if (timeInterval === "month") {
+    if (timeInterval === 30) {
       return 30;
     }
-    if (timeInterval === "all") {
+    if (timeInterval === 10000000000) {
       return 100;
     }
   }, [timeInterval]);
+
+  const charts = [
+    {
+      name: "Emissions Saved",
+      value: 30,
+      change: "+4.75%",
+      changeType: "positive",
+    },
+    {
+      name: "Money Saved",
+      value: 40,
+      change: "+54.02%",
+      changeType: "negative",
+    },
+    {
+      name: "Time Saved",
+      value: 70,
+      change: "+54.02%",
+      changeType: "negative",
+    },
+  ];
+
   const days = getDaysArr(trips);
 
   const { isLoadingLocations, locations, locationsError } = useLocations({
     id: user.uid,
   });
+
   const stats = useMemo(
     () => [
       {
         name: "Emissions Saved",
-        value: `${getEmissionsSaved(trips, value).toFixed(2)} kg`,
-        change: "+4.75%",
+        value: `${getEmissionsSaved(trips, timeInterval).toFixed(2)} kg`,
+        // change: "+4.75%",
         changeType: "positive",
       },
       {
         name: "Money Saved",
-        value: `$ ${getMoneySaved(trips, value).toFixed(2)}`,
-        change: "+54.02%",
+        value: `$ ${getMoneySaved(trips, timeInterval).toFixed(2)}`,
+        // change: "+54.02%",
         changeType: "negative",
       },
       {
         name: "Productivity Saved",
-        value: `${getTimeSaved(trips, value)}`,
-        change: "+54.02%",
+        value: `${getTimeSaved(trips, timeInterval)}`,
+        // change: "+54.02%",
         changeType: "negative",
       },
     ],
@@ -207,13 +218,14 @@ export default function Example({ user }: { user: User }) {
               Overview
             </h1>
             <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
-              {timeIntervals.map(({ name, id }) => (
+              {timeIntervals.map(({ name, id, interval }) => (
                 <button
                   key={id}
                   className={
-                    id === timeInterval ? "text-primary" : "text-gray-700"
+                    interval === timeInterval ? "text-primary" : "text-gray-700"
                   }
-                  onClick={() => setTimeInterval(id)}
+                  onClick={() => setTimeInterval(interval)
+                            }
                 >
                   {name}
                 </button>
@@ -277,7 +289,7 @@ export default function Example({ user }: { user: User }) {
           {/* Secondary navigation */}
 
           {/* Stats */}
-          <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
+          {/* <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
             <ul className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:px-2 xl:px-0">
               {charts.map(({ name, value }, statIdx) => (
                 <li
@@ -295,7 +307,7 @@ export default function Example({ user }: { user: User }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           <div
             className="absolute left-0 top-full -z-10  origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"

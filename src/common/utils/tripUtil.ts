@@ -2,18 +2,14 @@ import type { Trip } from "../types/data";
 
 const CO_PER_MILE = 0.367; //IN KG
 export default function getDaysArr(trips: Trip[]) {
-
-  console.log("Here", trips, Date.now());
   // today, yesterday, within a week, everything else
   let days:Trip[][] = [[],[],[],[]]
   trips.map((trip) => {
-    console.log("Iter",trip.date);
     if (trip.date <= Date.now() - 24 * 60 * 60) { days[0].push(trip) }
     else if (trip.date <= Date.now() - 2 * 24 * 60 * 60) { days[1].push(trip) }
     else if (trip.date <= Date.now() - 7 * 24 * 60 * 60) { days[2].push(trip) }
     else days[3].push(trip)
   });
-  console.log(days);
   return days;
 }
 
@@ -43,6 +39,7 @@ export function getEmissionsSaved(trips: Trip[], interval: number) {
         trips[i].date >= trips[trips.length - 1].date - interval * 24 * 60 * 60;
         i--
       ) {
+        console.log(interval, i)
         mileage += parseFloat(trips[i].distance.split(" ")[0]);
       }
       if ((mileage * 0.65) - (3 * trips.length) < (3 * .65)) {
