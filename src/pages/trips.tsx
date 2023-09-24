@@ -22,6 +22,8 @@ const Page: NextPage<PageProps> = ({user}) => {
     interval: 5,
   });
   const days = getDaysArr(trips);
+  const days_copy = [...days].toReversed();
+
   console.log("Days", days);
 
 
@@ -47,7 +49,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {days.map((day) => (
+                  {days_copy.map((day) => (
                     <Fragment >
                       <tr className="text-sm leading-6 text-gray-900">
                         <th
@@ -60,7 +62,7 @@ const Page: NextPage<PageProps> = ({user}) => {
                           <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                         </th>
                       </tr>
-                      {day.map((trip) => (
+                      {[...day].toReversed().map((trip) => (
                         <tr >
                           <td className="relative py-5 pr-6">
                             <div className="flex gap-x-6">
